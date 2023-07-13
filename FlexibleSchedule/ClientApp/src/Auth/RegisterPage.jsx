@@ -19,11 +19,7 @@ const Register = () => {
                 password
             })
         });
-            console.log(JSON.stringify({
-            name,
-            email,
-            password
-        }))
+            
 
         setRedirect(true);
     }

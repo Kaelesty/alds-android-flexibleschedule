@@ -1,6 +1,6 @@
 using Models;
 
-namespace Data;
+namespace FlexibleSchedule.Services.DataBaseService;
 
 public interface IUserRepository
 {

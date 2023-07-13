@@ -1,6 +1,6 @@
 using auth.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Data;
+using FlexibleSchedule.Services.DataBaseService;
 using WebApplication1.DataTransfersObjects;
 using Microsoft.AspNetCore.Http;
 using Models;
@@ -26,7 +26,6 @@ public class AuthController : ControllerBase
     [HttpPost]
     public IActionResult Register(RegisterDto dto)
     {
-        Console.WriteLine(dto.name);
         User user = new User
         {
             name = dto.name,

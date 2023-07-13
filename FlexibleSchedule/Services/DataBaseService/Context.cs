@@ -15,6 +15,7 @@ public class Context : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<TimeTable> TimeTables { get; set; }
     public DbSet<Group> Groups { get; set; }
+    public DbSet<GroupsUsers> GroupsUsers { get; set; }
 
 
     
@@ -23,6 +24,8 @@ public class Context : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<User>(entity => entity.HasIndex(e => e.email).IsUnique());
+        modelBuilder.Entity<Group>(entity => entity.HasIndex(e => e.Code).IsUnique());
+
         
         modelBuilder.Entity<Group>(entity =>
             {
