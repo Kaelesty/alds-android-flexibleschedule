@@ -1,6 +1,8 @@
+using Helpers.ScheduleHandler.Interfaces;
+
 namespace Models;
 
-public class User
+public class User : IUserScheduleHandler<Group>
 {
     public int id { get; set; }
     public string name  { get; set; }
