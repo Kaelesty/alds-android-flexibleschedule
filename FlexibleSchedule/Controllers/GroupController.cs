@@ -23,6 +23,12 @@ public class GroupController : ControllerBase
         _jwtService = jwtService;
     }
 
+
+    [HttpGet]
+    public IActionResult Test()
+    {
+        return Ok(_groupRepository.GetTimeTableById(1));
+    }
     [HttpPost]
     public IActionResult CreateGroup(GroupDto groupDto)
     {

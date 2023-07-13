@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FlexibleSchedule.Services.DataBaseService;
 using Helpers.ScheduleHandler.Interfaces;
 using Models;
 
@@ -9,16 +10,16 @@ namespace Helpers.ScheduleHandler
 {
     public class ScheduleHandler 
     {
-        private IGetScheduleRepository _ScheduleRepository;
+        private IGroupRepository _groupRepository;
 
-        public ScheduleHandler(IGetScheduleRepository scheduleRepository){
-            _ScheduleRepository = scheduleRepository;
+        public ScheduleHandler(IGroupRepository groupRepository){
+            _groupRepository = groupRepository;
         }
         public IEnumerable<IEnumerable<IEnumerable<string>>> GetSchedule<T> (IUserScheduleHandler<T> user) where T: IGroupScheduleHandler{
             List<List<IEnumerable<string>>> returnedSchedule = new List<List<IEnumerable<string>>>();
             List<IEnumerable<IEnumerable<IEnumerable<string>>>> groupsSchedule=new List<IEnumerable<IEnumerable<IEnumerable<string>>>>();
             foreach(IGroupScheduleHandler group in user.Groups){
-                groupsSchedule.Add(_ScheduleRepository.GetTimeTableById(group.Code));
+                groupsSchedule.Add(_groupRepository.GetTimeTableById(group.TimeTable.id));
             }
             for(int i=0; i<7; i++){
                 returnedSchedule.Add(new List<IEnumerable<string>>());
