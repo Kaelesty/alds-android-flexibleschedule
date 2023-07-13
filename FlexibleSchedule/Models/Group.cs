@@ -1,6 +1,9 @@
+using Helpers.ScheduleHandler.Interfaces;
+
+
 namespace Models;
 
-public class Group
+public class Group : IGroupScheduleHandler
 {
     public int id { get; set; }
     public string Code{ get; set; }
