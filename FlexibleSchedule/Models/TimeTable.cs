@@ -6,12 +6,12 @@ public class TimeTable
 {
     [Key]
     public int id { get; set; }
-    public string Pair1{ get; set; }
-    public string Pair2{ get; set; }
-    public string Pair3{ get; set; }
-    public string Pair4{ get; set; }
-    public string Pair5{ get; set; }
-    public string Pair6{ get; set; }
-    public string Pair7{ get; set; }
+    public string Day1{ get; set; }
+    public string Day2{ get; set; }
+    public string Day3{ get; set; }
+    public string Day4{ get; set; }
+    public string Day5{ get; set; }
+    public string Day6{ get; set; }
+    public string Day7{ get; set; }
     
 }

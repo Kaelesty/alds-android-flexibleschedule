@@ -5,13 +5,13 @@ export const PersonalPageMain = (props) =>{
     //todo добавить проверку авторизирован ли пользователь
     const [code, setCode] = useState("");
 
-    const [Pair1, setPair1] = useState(); //Решение объективно гавно, но пока так
-    const [Pair2, setPair2] = useState();
-    const [Pair3, setPair3] = useState();
-    const [Pair4, setPair4] = useState();
-    const [Pair5, setPair5] = useState();
-    const [Pair6, setPair6] = useState();
-    const [Pair7, setPair7] = useState();
+    const [Day1, setDay1] = useState(); //Решение объективно гавно, но пока так
+    const [Day2, setDay2] = useState();
+    const [Day3, setDay3] = useState();
+    const [Day4, setDay4] = useState();
+    const [Day5, setDay5] = useState();
+    const [Day6, setDay6] = useState();
+    const [Day7, setDay7] = useState();
 
 
 
@@ -24,13 +24,13 @@ export const PersonalPageMain = (props) =>{
             body: JSON.stringify({
                 Code : code,
                 timeTable: {
-                    Pair1: Pair1,
-                    Pair2: Pair2,
-                    Pair3: Pair3,
-                    Pair4: Pair4,
-                    Pair5: Pair5,
-                    Pair6: Pair6,
-                    Pair7: Pair7,
+                    Day1: Day1,
+                    Day2: Day2,
+                    Day3: Day3,
+                    Day4: Day4,
+                    Day5: Day5,
+                    Day6: Day6,
+                    Day7: Day7,
                     
                 }
                 
@@ -47,26 +47,26 @@ export const PersonalPageMain = (props) =>{
                                 onChange={e => setCode(e.target.value)}
                         />
                         <input  className="form-control" required
-                               onChange={e => setPair1(e.target.value)}
+                               onChange={e => setDay1(e.target.value)}
                         />
 
                         <input  className="form-control"  required
-                                onChange={e => setPair2(e.target.value)}
+                                onChange={e => setDay2(e.target.value)}
                         />
                         <input  className="form-control"  required
-                                onChange={e => setPair3(e.target.value)}
+                                onChange={e => setDay3(e.target.value)}
                         />
                         <input  className="form-control"  required
-                                onChange={e => setPair4(e.target.value)}
+                                onChange={e => setDay4(e.target.value)}
                         />
                         <input  className="form-control"  required
-                                onChange={e => setPair5(e.target.value)}
+                                onChange={e => setDay5(e.target.value)}
                         />
                         <input  className="form-control"  required
-                                onChange={e => setPair6(e.target.value)}
+                                onChange={e => setDay6(e.target.value)}
                         />
                         <input  className="form-control"  required
-                                onChange={e => setPair7(e.target.value)}
+                                onChange={e => setDay7(e.target.value)}
                         />
                     
                         <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
