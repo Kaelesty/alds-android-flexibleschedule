@@ -3,7 +3,7 @@ using Helpers.ScheduleHandler.Interfaces;
 
 namespace Models;
 
-public class Group : IGroupScheduleHandler
+public class Group
 {
     public int id { get; set; }
     public string Code{ get; set; }

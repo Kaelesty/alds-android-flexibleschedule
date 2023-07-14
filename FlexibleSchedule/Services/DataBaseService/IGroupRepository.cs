@@ -9,5 +9,7 @@ public interface IGroupRepository : IGetScheduleRepository
     Group Create(Group group);
     Group GetById(int id);
     void ConnectToGroup(ConnectGroupDto dto,int userId);
+    public User GetGroupsByUserId(int id);
+
 
 }

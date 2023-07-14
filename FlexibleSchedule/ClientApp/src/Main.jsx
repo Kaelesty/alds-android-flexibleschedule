@@ -1,15 +1,25 @@
-import React, {SyntheticEvent, useState} from 'react';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 import {Navigate} from "react-router-dom";
 import Header from "./Header/header__navigation";
 
-const TimeTable = [ //todo Будет fetch с методом post для получения расписания,но пока так
-    [1,2,3,4],
-    [1,2,3,4],
-    [1,2,3,5]
-    
-]
-
+// const TimeTable = [ //todo Будет fetch с методом post для получения расписания,но пока так
+//     [['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод']],
+//     [["1","2","3","4"],[]],
+//     [1,2,3,5]
+//    
+// ]
 const MainPage = (props) => {
+    const [TimeTable, setTimeTable] = useState([]);
+
+    useEffect(()=>{
+        fetch("api/Group/GetFullTimeTable")
+            .then(response => {
+                return response.json()
+            })
+            .then(responseJson => {
+                setTimeTable(responseJson)
+            })
+    },[])
     const [name, setName] = useState('');
 
 
@@ -19,20 +29,21 @@ const MainPage = (props) => {
             <Header name={props.name} setName={props.setName} />
             <table>
                 <tr>
-                    <th>номер пары</th>
-                    <th>Название пары</th>
-                    <th>место</th>
-                    <th>препод</th>
+                    <th>Понедельник</th>
+                    <th>Вторник</th>
+                    <th>Среда</th>
+                    <th>Четверг</th>
+                    <th>Пятницу</th>
+                    <th>Суббота</th>
+                    <th>Воскресение</th>
                 </tr>
-                {TimeTable.map(Pair =>
-                    <tr>
-                        <td>{Pair[0]}</td>
-                        <td>{Pair[1]}</td>
-                        <td>{Pair[2]}</td>
-                        <td>{Pair[3]}</td>
-                    </tr>
-                )}
-                
+                {TimeTable.map(days =>(
+                <td>
+                    {days.map(pair =>(
+                    <tr>{pair[0]}, {pair[1]},{pair[2]}, {pair[3]}</tr>
+                        ))}
+                </td>
+                    ))}
             </table>
         </div>
         

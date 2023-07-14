@@ -8,4 +8,5 @@ public interface IUserRepository
     User GetByEmail(string email);
     public User GetById(int id);
 
+
 }

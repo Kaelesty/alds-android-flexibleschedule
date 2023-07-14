@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Services.DataBaseService;
 using Models;
 namespace FlexibleSchedule.Services.DataBaseService;
@@ -31,4 +32,5 @@ public class UserRepository : IUserRepository
     {
         return _context.Users.FirstOrDefault(u => u.id == id);
     }
+
 }

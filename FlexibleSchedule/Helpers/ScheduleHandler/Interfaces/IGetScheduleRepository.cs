@@ -7,6 +7,6 @@ namespace Helpers.ScheduleHandler.Interfaces
 {
     public interface IGetScheduleRepository
     {
-        public IEnumerable<IEnumerable<IEnumerable<string>>> GetTimeTableById(int id);
+        public IEnumerable<IEnumerable<IEnumerable<string>>> GetGroupTimeTableById(int id);
     }
 }

@@ -45,29 +45,19 @@ public class GroupRepository : IGroupRepository
         return _context.Groups.FirstOrDefault(g => g.id == id);
     }
 
-    public IEnumerable<IEnumerable<IEnumerable<string>>> GetTimeTableById(int id)
+    public IEnumerable<IEnumerable<IEnumerable<string>>> GetGroupTimeTableById(int id)
     {
+        TimeTable timeTable = _context.Groups
+            .Include(g=>g.TimeTable)
+            .FirstOrDefault(g => g.id == id)!.TimeTable;
         
-        //todo в базе данных информациях хранится вот так:
-        //day1 Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод
-        //day2 Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод
-        //day3 Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод
-        //day4 Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод
-        //day5 Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод
-        //day6 Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод
-        //day7 Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод
-        
-        
-        TimeTable timeTable = _context.TimeTables.FirstOrDefault(g => g.id == id)!;
-        
-        //days хранит строки
         List<string> days = new List<string>
         {
             timeTable.Day1, timeTable.Day2, timeTable.Day3, timeTable.Day4, timeTable.Day5, timeTable.Day6, 
             timeTable.Day7
         };
         
-        List<List<string[]>> returnTimeTable = new List<List<string []>>();
+        List<List<string[]>> returnTimeTable = new List<List<string[]>>();
 
         int i=0;
         foreach(string day in days){
@@ -81,6 +71,13 @@ public class GroupRepository : IGroupRepository
 
         }
         return returnTimeTable;
+    }
+    
+    public User GetGroupsByUserId(int id)
+    {
+        return _context.Users
+            .Include(u=>u.Groups)
+            .FirstOrDefault(u => u.id == id);
     }
 
     private List<string> SplitIntoPairs(string Day)

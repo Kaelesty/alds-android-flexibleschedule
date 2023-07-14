@@ -17,7 +17,7 @@ builder.Services.AddDbContext<Context>(options =>{
         case "DESKTOP-AI7DA69": 
             configurationName = "alexbelks";
         break;
-        default: configurationName = "Jorden";
+        default: configurationName = "Jordenn";
         break;
     }
     options.UseMySql(builder.Configuration.GetConnectionString(configurationName),new MySqlServerVersion(new Version(10, 1, 40)));

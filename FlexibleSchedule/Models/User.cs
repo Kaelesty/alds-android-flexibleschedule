@@ -2,7 +2,7 @@ using Helpers.ScheduleHandler.Interfaces;
 
 namespace Models;
 
-public class User : IUserScheduleHandler<Group>
+public class User
 {
     public int id { get; set; }
     public string name  { get; set; }

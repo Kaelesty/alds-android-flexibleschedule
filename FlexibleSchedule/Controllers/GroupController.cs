@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Models;
 using auth.Helpers;
 using FlexibleSchedule.Services.DataBaseService;
+using Helpers.ScheduleHandler;
+using Helpers.ScheduleHandler.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Services.DataBaseService;
 namespace Controllers;
@@ -22,12 +24,21 @@ public class GroupController : ControllerBase
         _groupRepository = groupRepository;
         _jwtService = jwtService;
     }
-
-
     [HttpGet]
-    public IActionResult Test()
+    public IActionResult GetFullTimeTable()
     {
-        return Ok(_groupRepository.GetTimeTableById(1));
+        TimeTableCombiner timeTableCombiner = new TimeTableCombiner();
+        var jwt = Request.Cookies["jwt"];
+
+        var token = _jwtService.Verify(jwt);
+        
+        int userId = int.Parse(token.Issuer);
+        List<IEnumerable<IEnumerable<IEnumerable<string>>>> TimeTables=new List<IEnumerable<IEnumerable<IEnumerable<string>>>>();
+        foreach (var group in _groupRepository.GetGroupsByUserId(userId).Groups)
+        {
+            TimeTables.Add(_groupRepository.GetGroupTimeTableById(group.id));
+        }
+        return Ok(timeTableCombiner.GetSchedule(TimeTables));
     }
     [HttpPost]
     public IActionResult CreateGroup(GroupDto groupDto)

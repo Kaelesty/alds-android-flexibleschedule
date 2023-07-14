@@ -10,6 +10,7 @@ const Header = (props) => {
         });
 
         props.setName(null);
+        window.location.reload()
     }
     let menu;
     console.log(props.name)
