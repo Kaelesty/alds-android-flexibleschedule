@@ -10,9 +10,9 @@ namespace Helpers.ScheduleHandler
 {
     public class ScheduleHandler 
     {
-        private IGroupRepository _groupRepository;
+        private IGetScheduleRepository _groupRepository;
 
-        public ScheduleHandler(IGroupRepository groupRepository){
+        public ScheduleHandler(IGetScheduleRepository groupRepository){
             _groupRepository = groupRepository;
         }
         public IEnumerable<IEnumerable<IEnumerable<string>>> GetSchedule<T> (IUserScheduleHandler<T> user) where T: IGroupScheduleHandler{

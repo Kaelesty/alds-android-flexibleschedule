@@ -1,13 +1,13 @@
 using Models;
 using WebApplication1.DataTransfersObjects;
+using Helpers.ScheduleHandler.Interfaces;
 
 namespace FlexibleSchedule.Services.DataBaseService;
 
-public interface IGroupRepository
+public interface IGroupRepository : IGetScheduleRepository
 {
     Group Create(Group group);
     Group GetById(int id);
     void ConnectToGroup(ConnectGroupDto dto,int userId);
-    public IEnumerable<IEnumerable<IEnumerable<string>>> GetTimeTableById(int id);
 
 }

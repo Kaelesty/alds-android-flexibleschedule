@@ -11,8 +11,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IGroupRepository,GroupRepository>();
 builder.Services.AddScoped<JwtService>();
-builder.Services.AddDbContext<Context>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("Default"),new MySqlServerVersion(new Version(10, 1, 40))));
+builder.Services.AddDbContext<Context>(options =>{
+    string configurationName;
+    switch(System.Environment.MachineName){
+        case "DESKTOP-AI7DA69": 
+            configurationName = "alexbelks";
+        break;
+        default: configurationName = "Jorden";
+        break;
+    }
+    options.UseMySql(builder.Configuration.GetConnectionString(configurationName),new MySqlServerVersion(new Version(10, 1, 40)));
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

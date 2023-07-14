@@ -4,6 +4,7 @@ using Models;
 using Org.BouncyCastle.Bcpg;
 using WebApplication1.DataTransfersObjects;
 
+
 namespace FlexibleSchedule.Services.DataBaseService;
 
 public class GroupRepository : IGroupRepository
@@ -57,9 +58,7 @@ public class GroupRepository : IGroupRepository
         //day7 Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод/Вермя&Предмет&Место&Препод
         
         
-        TimeTable timeTable = _context.Groups
-            .Include(g=>g.TimeTable)
-            .FirstOrDefault(g => g.id == id)!.TimeTable;
+        TimeTable timeTable = _context.TimeTables.FirstOrDefault(g => g.id == id)!;
         
         //days хранит строки
         List<string> days = new List<string>
@@ -67,8 +66,20 @@ public class GroupRepository : IGroupRepository
             timeTable.Day1, timeTable.Day2, timeTable.Day3, timeTable.Day4, timeTable.Day5, timeTable.Day6, 
             timeTable.Day7
         };
+        
+        List<List<string[]>> returnTimeTable = new List<List<string []>>();
 
+        int i=0;
+        foreach(string day in days){
+            returnTimeTable.Add(new List<string[]>());
+            string [] pairs = day.Split('/');
+            foreach(string pair in pairs){
+                string [] pairInfo = pair.Split('&');
+                returnTimeTable[i].Add(pairInfo);
+            }
+            i++;
 
+        }
         return returnTimeTable;
     }
 
