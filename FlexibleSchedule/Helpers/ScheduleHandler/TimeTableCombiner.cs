@@ -17,7 +17,21 @@ namespace Helpers.ScheduleHandler
                 foreach(IEnumerable<IEnumerable<IEnumerable<string>>> groupSchedule in groupsSchedule){
                     returnedSchedule[i].AddRange(groupSchedule.ToArray()[i]);
                 }
-                returnedSchedule[i].Sort((x, y)=>{return Convert.ToInt32(x.ToArray()[0])-Convert.ToInt32(y.ToArray()[0]);});
+
+                try
+                {
+
+                    returnedSchedule[i].Sort((x, y) =>
+                    {
+                        return Convert.ToInt32(x.ToArray()[0]) - Convert.ToInt32(y.ToArray()[0]);
+                    });
+                }
+                catch
+                {
+                    continue;
+                }
+
+                    
             }
             
             return returnedSchedule;

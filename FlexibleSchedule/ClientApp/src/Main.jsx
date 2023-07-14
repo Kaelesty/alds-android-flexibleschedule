@@ -40,7 +40,8 @@ const MainPage = (props) => {
                 {TimeTable.map(days =>(
                 <td>
                     {days.map(pair =>(
-                    <tr>{pair[0]}, {pair[1]},{pair[2]}, {pair[3]}</tr>
+                        pair != '' ? <tr>{pair[0]}, {pair[1]},{pair[2]}, {pair[3]}</tr> : ''
+                        
                         ))}
                 </td>
                     ))}
