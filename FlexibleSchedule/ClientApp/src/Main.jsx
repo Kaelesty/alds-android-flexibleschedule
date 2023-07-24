@@ -28,6 +28,7 @@ const MainPage = (props) => {
     const dayss = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресение']
     console.log(name)
     let i =-1
+    console.log(TimeTable)
     return (
         <div >
             <Header name={props.name} setName={props.setName} />
@@ -54,7 +55,10 @@ const MainPage = (props) => {
                     </tr>
                     {days.map(pair =>(
                     <tr>
-                            <td>{pair[0]}</td><td>{pair[1]}</td><td>{pair[2]}</td><td>{pair[3]}</td> 
+                        {
+                            pair[0] == "-" & pair[1] == "-"&pair[2] == "-"&pair[3] == "-" ? null :<><td>{pair[0]}</td><td>{pair[1]}</td><td>{pair[2]}</td><td>{pair[3]}</td></>
+                        
+                        }
                     </tr>
                         ))}
                 </td>
