@@ -40,6 +40,7 @@ public class GroupController : ControllerBase
         }
         return Ok(timeTableCombiner.GetSchedule(TimeTables));
     }
+    
     [HttpPost]
     public IActionResult CreateGroup(GroupDto groupDto)
     {

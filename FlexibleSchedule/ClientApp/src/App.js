@@ -5,6 +5,7 @@ import RegisterPage from "./Auth/RegisterPage";
 import LoginPage from "./Auth/LoginPage";
 import MainPage from "./Main.jsx";
 import {PersonalPageMain} from "./PersonalPage/PersonalPageMain";
+import MyTimeTable from "./PersonalPage/MyTimeTablesPage";
 function App() {
 
 const [name, setName] = useState(undefined);
@@ -33,6 +34,8 @@ useEffect(() => {
     return (
         <Routes >PersonalPageMain
             <Route path="/PersonalPageMain" element={<PersonalPageMain name={name} setName={setName}/>}/> />
+            MyTimeTable
+            <Route path="/MyTimeTables" element={<MyTimeTable name={name}/>}/> />
 
             <Route path="/" element={<MainPage name={name} setName={setName}/>}/> />
             <Route path="/register" element={<RegisterPage />}/> />
