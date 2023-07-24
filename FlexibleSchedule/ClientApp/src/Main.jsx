@@ -2,14 +2,6 @@ import React, {SyntheticEvent, useEffect, useState} from 'react';
 import {Navigate} from "react-router-dom";
 import style from './custom.css';
 import Header from "./Header/header__navigation";
-
-// const TimeTable = [ //todo Будет fetch с методом post для получения расписания,но пока так
-//     [['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод'],['время','пара','место','препод']],
-//     [["1","2","3","4"],[]],
-//     [1,2,3,5]
-//    
-// ]
-
 const MainPage = (props) => {
     
     const [TimeTable, setTimeTable] = useState([]);
@@ -33,15 +25,6 @@ const MainPage = (props) => {
         <div >
             <Header name={props.name} setName={props.setName} />
             <table st>
-                {/*<tr>*/}
-                {/*    <th>Понедельник</th>*/}
-                {/*    <th>Вторник</th>*/}
-                {/*    <th>Среда</th>*/}
-                {/*    <th>Четверг</th>*/}
-                {/*    <th>Пятницу</th>*/}
-                {/*    <th>Суббота</th>*/}
-                {/*    <th>Воскресение</th>*/}
-                {/*</tr>*/}
                 {TimeTable.map(days =>(
                     i++,
                     <tr>
@@ -69,9 +52,6 @@ const MainPage = (props) => {
             </table>
         </div>
     );
-}                        // pair[0] == '-'? pair = '' : pair = pair,
-//     pair[1] == '-'? pair = '' : pair = pair,
-//     pair[3] == '-'? pair = '' : pair = pair,
-//     pair[4] == '-'? pair = '' : pair = pair,
+}                        
 
 export default MainPage;
