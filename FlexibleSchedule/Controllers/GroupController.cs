@@ -34,12 +34,55 @@ public class GroupController : ControllerBase
         
         int userId = int.Parse(token.Issuer);
         List<IEnumerable<IEnumerable<IEnumerable<string>>>> TimeTables=new List<IEnumerable<IEnumerable<IEnumerable<string>>>>();
-        foreach (var group in _groupRepository.GetGroupsByUserId(userId).Groups)
+        foreach (var group in _groupRepository.GetUserByUserId(userId).Groups)
         {
             TimeTables.Add(_groupRepository.GetGroupTimeTableById(group.id));
         }
         return Ok(timeTableCombiner.GetSchedule(TimeTables));
     }
+
+    [HttpPost]
+    public IActionResult DeleteGroup(GroupsUsersDto dto)
+    {
+        Console.WriteLine(dto.Code);
+        Console.WriteLine(dto.GroupId);
+        try
+        {
+            var jwt = Request.Cookies["jwt"];
+
+            var token = _jwtService.Verify(jwt);
+
+            int UserId = int.Parse(token.Issuer);
+            
+            _groupRepository.DeleteGroup(dto,UserId);
+
+            return Ok();
+        }
+        catch (Exception)
+        {
+            return Unauthorized();
+        }
+    }
+
+    [HttpGet]
+    public IActionResult GetAllGroupCodes()
+    {
+        try
+        {
+            var jwt = Request.Cookies["jwt"];
+
+            var token = _jwtService.Verify(jwt);
+
+            int UserId = int.Parse(token.Issuer);
+
+            return Ok(_groupRepository.GetAllCodesByUserId(UserId));
+        }
+        catch (Exception)
+        {
+            return Unauthorized();
+        }
+    }
+    
     
     [HttpPost]
     public IActionResult CreateGroup(GroupDto groupDto)

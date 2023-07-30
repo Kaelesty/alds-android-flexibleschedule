@@ -28,6 +28,15 @@ public class GroupRepository : IGroupRepository
         _context.SaveChanges();
 
     }
+
+    public void DeleteGroup(GroupsUsersDto dto, int UserID)
+    {
+        _context.GroupsUsers.Remove(
+            _context.GroupsUsers.Where(g => g.GroupId == dto.GroupId & g.UserId == UserID).FirstOrDefault()
+        );
+        _context.SaveChanges();
+    }
+
     public Group Create(Group group) //todo добавить проверку, чтобы пользователь не мог создать больше двух расписаний!!!
     {
         User user = _context.Users.FirstOrDefault(sp=>sp.id==group.CreatorId);
@@ -72,8 +81,28 @@ public class GroupRepository : IGroupRepository
         }
         return returnTimeTable;
     }
+    public List<GroupsUsersDto> GetAllCodesByUserId(int id)
+    {
+        List<GroupsUsersDto> Codes = new List<GroupsUsersDto>();
+        IEnumerable<int> GroupsId = _context.GroupsUsers
+            .Where(u => u.UserId == id)
+            .Select(g=>g.GroupId);
+        
+        IEnumerable<Group> Groups = _context.Groups.Where(g => GroupsId.Contains(g.id));
+        foreach (var group in Groups)
+        {
+            Codes.Add(new GroupsUsersDto
+            {
+                GroupId = group.id,
+                Code = group.Code
+            });
+
+        }
+        return Codes;
+    }
     
-    public User GetGroupsByUserId(int id)
+    
+    public User GetUserByUserId(int id)
     {
         return _context.Users
             .Include(u=>u.Groups)

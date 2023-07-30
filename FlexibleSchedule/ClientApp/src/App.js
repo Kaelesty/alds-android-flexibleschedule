@@ -35,7 +35,7 @@ useEffect(() => {
         <Routes >PersonalPageMain
             <Route path="/PersonalPageMain" element={<PersonalPageMain name={name} setName={setName}/>}/> />
             MyTimeTable
-            <Route path="/MyTimeTables" element={<MyTimeTable name={name}/>}/> />
+            <Route path="/MyTimeTables" element={<MyTimeTable name={name} setName={setName}/>}/> />
 
             <Route path="/" element={<MainPage name={name} setName={setName}/>}/> />
             <Route path="/register" element={<RegisterPage />}/> />
