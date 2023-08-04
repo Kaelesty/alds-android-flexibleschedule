@@ -86,7 +86,7 @@ public class GroupController : ControllerBase
             {
                 Code = groupDto.Code,
 
-                TimeTable = groupDto.timeTable,
+                TimeTable = groupDto.TimeTable,
                 CreatorId = creatorId,
                 Users = new List<User>()
 
