@@ -8,8 +8,8 @@ import {PersonalPageMain} from "./PersonalPage/PersonalPageMain";
 import MyTimeTable from "./PersonalPage/MyTimeTablesPage";
 function App() {
 
-const [name, setName] = useState(undefined);
-useEffect(() => {
+    const [name, setName] = useState(undefined);
+    useEffect(() => {
     (
         async () => {
             const response = await fetch('api/Auth/User', {

@@ -21,10 +21,10 @@ public class GroupRepository : IGroupRepository
 
     public void ConnectToGroup(ConnectGroupDto dto,int UserId)
     {
-        User user = _context.Users
-            .Include(u=>u.Groups)
-            .FirstOrDefault(sp=>sp.id==UserId);
+        User user = _context.Users.Include(u=>u.Groups).FirstOrDefault(sp=>sp.id==UserId);
+        
         user.Groups.Add(_context.Groups.FirstOrDefault(g=>g.Code==dto.Code));
+        
         _context.SaveChanges();
 
     }
@@ -39,8 +39,8 @@ public class GroupRepository : IGroupRepository
 
     public Group Create(Group group) //todo добавить проверку, чтобы пользователь не мог создать больше двух расписаний!!!
     {
-        User user = _context.Users.FirstOrDefault(sp=>sp.id==group.CreatorId);
-        group.Users.Add(user);
+        User Creator = _context.Users.FirstOrDefault(sp=>sp.id==group.CreatorId);
+        group.Users.Add(Creator);
         _context.Groups.Add(group);
         group.id = _context.SaveChanges();
         return group;
@@ -48,38 +48,21 @@ public class GroupRepository : IGroupRepository
 
     }
     
-
-    public Group GetById(int id)
+    public Group GetGroupById(int id)
     {
         return _context.Groups.FirstOrDefault(g => g.id == id);
     }
 
-    public IEnumerable<IEnumerable<IEnumerable<string>>> GetGroupTimeTableById(int id)
+    public TimeTable GetTimeTableByGroupId(int id)
     {
-        TimeTable timeTable = _context.Groups
+        TimeTable timeTable1 = _context.Groups
             .Include(g=>g.TimeTable)
             .FirstOrDefault(g => g.id == id)!.TimeTable;
-        
-        List<string> days = new List<string>
-        {
-            timeTable.Day1, timeTable.Day2, timeTable.Day3, timeTable.Day4, timeTable.Day5, timeTable.Day6, 
-            timeTable.Day7
-        };
-        
-        List<List<string[]>> returnTimeTable = new List<List<string[]>>();
-
-        int i=0;
-        foreach(string day in days){
-            returnTimeTable.Add(new List<string[]>());
-            string [] pairs = day.Split('/');
-            foreach(string pair in pairs){
-                string [] pairInfo = pair.Split('&');
-                returnTimeTable[i].Add(pairInfo);
-            }
-            i++;
-
-        }
-        return returnTimeTable;
+        timeTable1.Days = _context.Days
+            .Where(d => d.timeTableId == timeTable1.id)
+            .Include(d=>d.Pairs)
+            .ToList();
+        return timeTable1;
     }
     public List<GroupsUsersDto> GetAllCodesByUserId(int id)
     {
@@ -107,12 +90,6 @@ public class GroupRepository : IGroupRepository
         return _context.Users
             .Include(u=>u.Groups)
             .FirstOrDefault(u => u.id == id);
-    }
-
-    private List<string> SplitIntoPairs(string Day)
-    {
-         List<string> Pairs = Day.Split('/').ToList();
-         return Pairs;
     }
 
 }

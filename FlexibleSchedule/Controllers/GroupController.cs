@@ -27,18 +27,17 @@ public class GroupController : ControllerBase
     [HttpGet]
     public IActionResult GetFullTimeTable()
     {
-        TimeTableCombiner timeTableCombiner = new TimeTableCombiner();
-        var jwt = Request.Cookies["jwt"];
-
-        var token = _jwtService.Verify(jwt);
-        
-        int userId = int.Parse(token.Issuer);
-        List<IEnumerable<IEnumerable<IEnumerable<string>>>> TimeTables=new List<IEnumerable<IEnumerable<IEnumerable<string>>>>();
-        foreach (var group in _groupRepository.GetUserByUserId(userId).Groups)
+        try
         {
-            TimeTables.Add(_groupRepository.GetGroupTimeTableById(group.id));
+            TimeTableCombiner timeTableCombiner = new TimeTableCombiner();
+            int userId = AuthCheck();
+            TimeTable timeTable = _groupRepository.GetTimeTableByGroupId(1);
+            return Ok(timeTable);
         }
-        return Ok(timeTableCombiner.GetSchedule(TimeTables));
+        catch (Exception)
+        {
+            return Unauthorized();
+        }
     }
 
     [HttpPost]
@@ -48,13 +47,9 @@ public class GroupController : ControllerBase
         Console.WriteLine(dto.GroupId);
         try
         {
-            var jwt = Request.Cookies["jwt"];
-
-            var token = _jwtService.Verify(jwt);
-
-            int UserId = int.Parse(token.Issuer);
+            int userId = AuthCheck();
             
-            _groupRepository.DeleteGroup(dto,UserId);
+            _groupRepository.DeleteGroup(dto,userId);
 
             return Ok();
         }
@@ -69,13 +64,9 @@ public class GroupController : ControllerBase
     {
         try
         {
-            var jwt = Request.Cookies["jwt"];
+            int userId = AuthCheck();
 
-            var token = _jwtService.Verify(jwt);
-
-            int UserId = int.Parse(token.Issuer);
-
-            return Ok(_groupRepository.GetAllCodesByUserId(UserId));
+            return Ok(_groupRepository.GetAllCodesByUserId(userId));
         }
         catch (Exception)
         {
@@ -89,11 +80,7 @@ public class GroupController : ControllerBase
     {
         try
         {
-            var jwt = Request.Cookies["jwt"];
-
-            var token = _jwtService.Verify(jwt);
-
-            int creatorId = int.Parse(token.Issuer);
+            int creatorId = AuthCheck();
             
             Group group = new Group
             {
@@ -120,14 +107,7 @@ public class GroupController : ControllerBase
     {
         try
         {
-
-
-            var jwt = Request.Cookies["jwt"];
-
-            var token = _jwtService.Verify(jwt);
-
-            int userId = int.Parse(token.Issuer);
-
+            int userId = AuthCheck();
 
             _groupRepository.ConnectToGroup(CgroupDto, userId);
 
@@ -138,6 +118,17 @@ public class GroupController : ControllerBase
             return Unauthorized();
         }
         
+    }
+
+    private int AuthCheck()
+    {
+        var jwt = Request.Cookies["jwt"];
+
+        var token = _jwtService.Verify(jwt);
+
+        int userId = int.Parse(token.Issuer);
+
+        return userId;
     }
 
 }

@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Models;
 
 namespace Helpers.ScheduleHandler.Interfaces
 {
     public interface IGetScheduleRepository
     {
-        public IEnumerable<IEnumerable<IEnumerable<string>>> GetGroupTimeTableById(int id);
+        public TimeTable GetTimeTableByGroupId(int id);
     }
 }

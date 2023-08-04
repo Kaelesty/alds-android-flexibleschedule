@@ -8,12 +8,17 @@ public class Context : DbContext
 
     public Context(DbContextOptions<Context> options): base(options)
     {
-        Database.EnsureCreated();
+        // Database.EnsureCreated();
+
 
     }
 
     public DbSet<User> Users { get; set; }
     public DbSet<TimeTable> TimeTables { get; set; }
+    public DbSet<Day> Days { get; set; }
+    public DbSet<Pair> Pairs { get; set; }
+
+
     public DbSet<Group> Groups { get; set; }
     public DbSet<GroupsUsers> GroupsUsers { get; set; }
 

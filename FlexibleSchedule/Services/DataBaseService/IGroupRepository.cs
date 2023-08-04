@@ -7,7 +7,7 @@ namespace FlexibleSchedule.Services.DataBaseService;
 public interface IGroupRepository : IGetScheduleRepository
 {
     Group Create(Group group);
-    Group GetById(int id);
+    Group GetGroupById(int id);
     void ConnectToGroup(ConnectGroupDto dto,int userId);
     public User GetUserByUserId(int id);
     public void DeleteGroup(GroupsUsersDto dto, int UserID);
