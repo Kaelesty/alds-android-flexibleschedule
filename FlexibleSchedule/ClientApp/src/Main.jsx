@@ -5,6 +5,7 @@ import Header from "./Header/header__navigation";
 const MainPage = (props) => {
     
     const [TimeTable, setTimeTable] = useState();
+    const [name, setName] = useState('');
 
     useEffect(()=>{
         fetch("api/Group/GetFullTimeTable")
@@ -16,14 +17,15 @@ const MainPage = (props) => {
             })
     },[])
     
-    const [name, setName] = useState('');
-    const Infos = ['Пара','Предмет','Место','Преподаватель']
-    const dayss = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресение']
+    const PairInfoTitle = ['Пара','Предмет','Место','Преподаватель']
+    const DaysOfWeek = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресение']
     
     return (
         <div >
             <Header name={props.name} setName={props.setName} />
-            
+            <div className={"TimTable"}> 
+                Ваш код тут
+            </div>
         </div>
     );
 }                        

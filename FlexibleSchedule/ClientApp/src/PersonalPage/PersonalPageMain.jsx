@@ -1,6 +1,7 @@
 import Header from "../Header/header__navigation";
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
+import {Container} from "reactstrap";
 
 export const PersonalPageMain = (props) => {
     //todo добавить проверку авторизирован ли пользователь
@@ -54,7 +55,6 @@ export const PersonalPageMain = (props) => {
 
     const GetPair = (NumberDay,NumberPair) =>{
         return <div >
-            
             <input className={'Pair'} placeholder={'Время'} type={"text"} name={'Time' + NumberDay+NumberPair}></input>
             <input className={'Pair'} placeholder={'Информация'} type={"text"} name={'Info' + NumberDay+NumberPair}></input>
             <input className={'Pair'} placeholder={'Место'} type={"text"} name={'Place' + NumberDay+NumberPair}></input>

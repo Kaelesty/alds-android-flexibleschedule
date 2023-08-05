@@ -58,20 +58,24 @@ public class GroupRepository : IGroupRepository
         TimeTable timeTable1 = _context.Groups
             .Include(g=>g.TimeTable)
             .FirstOrDefault(g => g.id == id)!.TimeTable;
+        
         timeTable1.Days = _context.Days
             .Where(d => d.timeTableId == timeTable1.id)
             .Include(d=>d.Pairs)
             .ToList();
+        
         return timeTable1;
     }
     public List<GroupsUsersDto> GetAllCodesByUserId(int id)
     {
         List<GroupsUsersDto> Codes = new List<GroupsUsersDto>();
+        
         IEnumerable<int> GroupsId = _context.GroupsUsers
             .Where(u => u.UserId == id)
             .Select(g=>g.GroupId);
         
         IEnumerable<Group> Groups = _context.Groups.Where(g => GroupsId.Contains(g.id));
+        
         foreach (var group in Groups)
         {
             Codes.Add(new GroupsUsersDto
@@ -81,15 +85,9 @@ public class GroupRepository : IGroupRepository
             });
 
         }
+        
         return Codes;
     }
     
     
-    public User GetUserByUserId(int id)
-    {
-        return _context.Users
-            .Include(u=>u.Groups)
-            .FirstOrDefault(u => u.id == id);
-    }
-
 }
