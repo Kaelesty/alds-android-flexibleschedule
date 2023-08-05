@@ -39,13 +39,39 @@ public class GroupRepository : IGroupRepository
 
     public Group Create(Group group) //todo добавить проверку, чтобы пользователь не мог создать больше двух расписаний!!!
     {
+        Console.WriteLine("Дошло");
         User Creator = _context.Users.FirstOrDefault(sp=>sp.id==group.CreatorId);
         group.Users.Add(Creator);
-        _context.Groups.Add(group);
+        GroupsUsers Connect = new GroupsUsers()
+        {
+            Groups = group,
+            GroupId = group.id,
+            Users = Creator,
+            UserId = Creator.id,
+            Priority = GetLastPriority(Creator.id)+1
+        };
+        _context.GroupsUsers.Add(Connect);
         group.id = _context.SaveChanges();
         return group;
 
+    }
+    private int GetLastPriority(int UserId)
+    {
+        try
+        {
+            return _context.GroupsUsers
+                .Max(g => g.Priority);
+        }
+        catch
+        {
+            return 1;
+        }
+    }
 
+    private int GetCurrentPriority(int groupId,int UserId)
+    {
+        return _context.GroupsUsers
+            .FirstOrDefault(g => g.Users.id == UserId && g.Groups.id == groupId).Priority;
     }
     
     public Group GetGroupById(int id)

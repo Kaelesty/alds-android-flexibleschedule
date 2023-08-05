@@ -8,4 +8,5 @@ public class GroupsUsers
 
     public int GroupId { get; set; }
     public Group Groups { get; set; }
+    public int Priority { get; set; }
 }

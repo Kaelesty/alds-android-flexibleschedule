@@ -1,26 +1,24 @@
 import Header from "../Header/header__navigation";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {Container} from "reactstrap";
 
 export const PersonalPageMain = (props) => {
+    const [maxSize,setMaxSize] = useState()
+    window.onload = function() { // можно также использовать window.addEventListener('load', (event) => {
+        setMaxSize(3)
+    };  
     //todo добавить проверку авторизирован ли пользователь
-    const [code, setCode] = useState('');
-    const [Day,setDay] = useState([])
-    const { register, handleSubmit } = useForm({
-        shouldUseNativeValidation: true,
-    })
-    const TimeTable = {
-        days:[]}
+    const TimeTable = {days:[]}
     const MainForm = document.getElementById('form')
     const onSubmit = (event) =>{
+        setMaxSize(maxSize)
         event.preventDefault()
         const subForms = MainForm.querySelectorAll('[id=subform]')
         console.log(subForms.length)
         for(let i =0;i<subForms.length;i++){
             const Day = {pairs:[]}
-            const subsubForms = MainForm.querySelectorAll('[id=subsubform]')
-            for(let j =0;j<subForms.length;j++){
+            for(let j =0;j<subForms[i].length;j++){
                 const Time = subForms[j].querySelector('[name="Time'+i+j+'"]')
                 const Info = subForms[j].querySelector('[name="Info'+i+j+'"]')
                 const Place = subForms[j].querySelector('[name="Place'+i+j+'"]')
@@ -41,7 +39,7 @@ export const PersonalPageMain = (props) => {
             code,
             TimeTable
         }))
-        fetch('api/Group/CreateGroup', {
+        const promise = fetch('api/Group/CreateGroup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
@@ -50,7 +48,15 @@ export const PersonalPageMain = (props) => {
                 TimeTable
             })
         })
-    }
+        promise.then(res => {
+            if(res.status===201){
+                alert("Расписание добавлено")
+            }
+            else{
+                alert("Ошибка! Расписание не добавлено, такой код уже существует")
+            }
+        })
+        }
 
 
     const GetPair = (NumberDay,NumberPair) =>{
@@ -58,11 +64,12 @@ export const PersonalPageMain = (props) => {
             <input className={'Pair'} placeholder={'Время'} type={"text"} name={'Time' + NumberDay+NumberPair}></input>
             <input className={'Pair'} placeholder={'Информация'} type={"text"} name={'Info' + NumberDay+NumberPair}></input>
             <input className={'Pair'} placeholder={'Место'} type={"text"} name={'Place' + NumberDay+NumberPair}></input>
-            <input  className={'Pair'}placeholder={'Преподаватель'} type={"text"} name={'Teacher' + NumberDay+NumberPair}></input>
+            <input  className={'Pair'} placeholder={'Преподаватель'} type={"text"} name={'Teacher' + NumberDay+NumberPair}></input>
         </div>;
         
     }
     const GetDay = (Number) =>{
+        console.log("getDay")
         return <>
             {numbers.slice(7-maxSize).map((number) =>
                 <>
@@ -74,7 +81,6 @@ export const PersonalPageMain = (props) => {
         </>;
 
     }
-    const [maxSize,setMaxSize] = useState(3)
     const numbers = [0,1,2,3,4,5,6]
     const DayOfWeek = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресение']
     const onChangeMax = (e) =>{
@@ -99,7 +105,6 @@ export const PersonalPageMain = (props) => {
                         {GetDay(number)}
                     </form>
                     </>
-                    
                 )}
             </form>
         </>

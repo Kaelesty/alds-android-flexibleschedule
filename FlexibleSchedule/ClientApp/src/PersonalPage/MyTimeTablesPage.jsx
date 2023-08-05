@@ -29,7 +29,6 @@ const MyTimeTable = (props) => {
             })
             
         });
-        setRedirect(true);
     }
     if (redirect) {
         return <Navigate to="/"/>;

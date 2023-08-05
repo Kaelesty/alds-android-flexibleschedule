@@ -4,7 +4,6 @@ import {Button} from "reactstrap";
 
 const Codes = () => {
     const [Codes, setCodes] = useState([]);
-    const [Tracker,setTracker] = useState(true);
     const Delete = (props)=> {
         fetch('api/Group/DeleteGroup', {
             method: 'POST',
@@ -15,7 +14,7 @@ const Codes = () => {
                 Code: props.code
             })
         });
-        setTracker(!Tracker)
+
     }
     useEffect(()=>{
         fetch("api/Group/GetAllGroupCodes")
@@ -25,7 +24,7 @@ const Codes = () => {
             .then(responseJson => {
                 setCodes(responseJson)
             })
-    },[Tracker])
+    },[Delete])
     const [code,setCode] = useState()
     
     console.log(Codes)

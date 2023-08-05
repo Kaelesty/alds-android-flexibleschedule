@@ -92,7 +92,7 @@ public class GroupController : ControllerBase
 
             };
             Group group_ = _groupRepository.Create(group);
-            return Created("success", group_);
+            return Created("sd",group);
         }
         catch (Exception)
         {
