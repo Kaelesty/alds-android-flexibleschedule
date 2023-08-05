@@ -9,36 +9,37 @@ export const PersonalPageMain = (props) => {
         setMaxSize(3)
     };  
     //todo добавить проверку авторизирован ли пользователь
-    const TimeTable = {days:[]}
     const MainForm = document.getElementById('form')
     const onSubmit = (event) =>{
+        const TimeTable = {days:[]}
         setMaxSize(maxSize)
         event.preventDefault()
         const subForms = MainForm.querySelectorAll('[id=subform]')
-        console.log(subForms.length)
         for(let i =0;i<subForms.length;i++){
             const Day = {pairs:[]}
-            for(let j =0;j<subForms[i].length;j++){
-                const Time = subForms[j].querySelector('[name="Time'+i+j+'"]')
-                const Info = subForms[j].querySelector('[name="Info'+i+j+'"]')
-                const Place = subForms[j].querySelector('[name="Place'+i+j+'"]')
-                const Teacher = subForms[j].querySelector('[name="Teacher'+i+j+'"]')
+            for(let j =0;j<subForms[i].childNodes.length;j++) {
+                // console.log(subForms[i].childNodes[j])
+                const subsubForm = subForms[i].childNodes[j]
+                // console.log(subsubForm)
+                const Time = subsubForm[0]
+                const Info = subsubForm[1]
+                const Place = subsubForm[2]
+                const Teacher = subsubForm[3]
                 const Pair = {
                     Time: Time.value,
                     Info: Info.value,
                     Place: Place.value,
                     Teacher: Teacher.value
                 }
-
-                Day.pairs.push(Pair)
+                if(!(Pair.Time==="" && Pair.Info==="" && Pair.Place==="" && Pair.Teacher==="")){
+                    Day.pairs.push(Pair)
+                }
             }
-            TimeTable.days.push(Day)
+                TimeTable.days.push(Day)
+            
         }
+        console.log(TimeTable)
         const code = MainForm.querySelector('[name="Code"]').value
-        console.log(JSON.stringify({
-            code,
-            TimeTable
-        }))
         const promise = fetch('api/Group/CreateGroup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -48,6 +49,7 @@ export const PersonalPageMain = (props) => {
                 TimeTable
             })
         })
+        
         promise.then(res => {
             if(res.status===201){
                 alert("Расписание добавлено")
@@ -69,11 +71,10 @@ export const PersonalPageMain = (props) => {
         
     }
     const GetDay = (Number) =>{
-        console.log("getDay")
         return <>
             {numbers.slice(7-maxSize).map((number) =>
                 <>
-                <form id={'subsubform'}>
+                <form id={'subsubform'+number}>
                     {GetPair(number,Number)}
                 </form>
                 </>
@@ -84,7 +85,7 @@ export const PersonalPageMain = (props) => {
     const numbers = [0,1,2,3,4,5,6]
     const DayOfWeek = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресение']
     const onChangeMax = (e) =>{
-        if(e.target.value >=0 && e.target.value <8)
+        if(e.target.value >0 && e.target.value <8)
         setMaxSize(e.target.value)
     }
     return (

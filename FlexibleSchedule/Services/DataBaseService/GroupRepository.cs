@@ -41,7 +41,8 @@ public class GroupRepository : IGroupRepository
     {
         Console.WriteLine("Дошло");
         User Creator = _context.Users.FirstOrDefault(sp=>sp.id==group.CreatorId);
-        group.Users.Add(Creator);
+        Console.WriteLine(group.TimeTable.Days[0].Pairs[0].Info);
+        _context.Days.AddRange(group.TimeTable.Days);
         GroupsUsers Connect = new GroupsUsers()
         {
             Groups = group,

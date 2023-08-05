@@ -16,7 +16,7 @@ const MainPage = (props) => {
                 setTimeTable(responseJson)
             })
     },[])
-    
+    console.log(TimeTable)
     const PairInfoTitle = ['Пара','Предмет','Место','Преподаватель']
     const DaysOfWeek = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресение']
     
