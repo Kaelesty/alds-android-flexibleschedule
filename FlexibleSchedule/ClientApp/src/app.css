@@ -1,0 +1,11 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    font-family: "nav_font";
+    background-color: #000837;
+    color:#fff;
+    background-image: url('./image/HKVW.gif');
+}
+
+.new_font {
+    font-family: "romeo-rus-lat";
+}

@@ -17,8 +17,9 @@ builder.Services.AddDbContext<Context>(options =>{
         case "DESKTOP-AI7DA69": 
             configurationName = "alexbelks";
         break;
-        
-        
+        case "LAPTOP-NCL2H5HG": 
+            configurationName = "Evgesha";
+        break;
         default: configurationName = "Jordenn";
         break;
     }

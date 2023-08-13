@@ -1,12 +1,25 @@
 .header__nav {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
+    font-size: 1.5em;
     align-items: center;
-    width: 70%;
+    width: 100%;
+    color:#fff;
 }
 
 .header__a {
     text-decoration: none;
-    padding: 20px 0;
+    margin: 15px;
+    padding: 15px 20px;
+    color: #fff;
+    border: 1px #000 solid;
+    transition: 1s;
+}
+
+.header__a:hover {
+    color: #fff;
+    background-color: rgba(0,0,0,0.5);
+    border: 1px solid rgb(146, 148, 248);
+    box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
 }
