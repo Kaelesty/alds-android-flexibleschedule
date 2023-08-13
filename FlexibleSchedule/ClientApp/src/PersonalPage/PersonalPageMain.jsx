@@ -31,6 +31,10 @@ export const PersonalPageMain = (props) => {
                     Place: Place.value,
                     Teacher: Teacher.value
                 }
+                if(!((Pair.Time=="" && Pair.Info=="" && Pair.Place=="" && Pair.Teacher=="") || (Pair.Time!="" && Pair.Info!="" && Pair.Place!="" && Pair.Teacher!=""))){
+                    alert("у предмета должны быть заполнены все поля, либо не заполнено ни одно")
+                    return
+                }
                 if(!(Pair.Time==="" && Pair.Info==="" && Pair.Place==="" && Pair.Teacher==="")){
                     Day.pairs.push(Pair)
                 }
