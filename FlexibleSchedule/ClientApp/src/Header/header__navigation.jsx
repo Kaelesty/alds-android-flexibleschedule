@@ -19,8 +19,8 @@ const Header = (props) => {
             <nav className="header__nav">
                 <Link to="/" className="header__a"  >Главная страница </Link>
                 <Link to="/" className="header__a" onClick={logout} >Выйти </Link>
-                <Link to="/PersonalPageMain" className="nav-link" onClick={window.location.reload} >{props.name}</Link>
-                <Link to="/MyTimeTables" className="nav-link" >Мои Расписания</Link>
+                <Link to="/PersonalPageMain" className="header__a" onClick={window.location.reload} >{props.name}</Link>
+                <Link to="/MyTimeTables" className="header__a" >Мои Расписания</Link>
 
             </nav>
         )
