@@ -2,10 +2,20 @@ import {useEffect, useState} from "react";
 import {Button} from "reactstrap";
 
 
-const Codes = () => {
+const Codes = (Props) => {
     const [Codes, setCodes] = useState([]);
-    const Delete = (props)=> {
-        fetch('api/Group/DeleteGroup', {
+    const GetCodes = () => {
+        fetch("api/Group/GetAllGroupCodes")
+            .then(response => {
+                return response.json()
+            })
+            .then(responseJson => {
+                Props.setCodes(responseJson)
+            })
+    }
+    const Delete = async (props)=> {
+        
+        await fetch('api/Group/DeleteGroup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
@@ -14,7 +24,7 @@ const Codes = () => {
                 Code: props.code
             })
         });
-
+        await GetCodes()
     }
     useEffect(()=>{
         fetch("api/Group/GetAllGroupCodes")
@@ -22,15 +32,14 @@ const Codes = () => {
                 return response.json()
             })
             .then(responseJson => {
-                setCodes(responseJson)
+                Props.setCodes(responseJson)
             })
-    },[Delete])
+    },[])
     const [code,setCode] = useState()
     
-    console.log(Codes)
     return (
         <>
-        {Codes.map(code =>(
+        {Props.Codes.map(code =>(
             <p>{code.code}
             <Button onClick ={()=>Delete(code)}>Удалить</Button>
             </p>

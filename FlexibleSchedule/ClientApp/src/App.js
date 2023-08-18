@@ -9,8 +9,9 @@ import MyTimeTable from "./PersonalPage/MyTimeTablesPage";
 import StartPage from './pages/startPage/startPage';
 function App() {
 
-    const [name, setName] = useState(undefined);
-    useEffect(() => {
+    const [user, setUser] = useState({name: null,
+    isAuthorized: null});
+    useEffect( () => {
     (
         async () => {
             const response = await fetch('api/Auth/User', {
@@ -19,26 +20,26 @@ function App() {
 
             });
             if(response.status === 200){
-
                 const content = await response.json();
-                setName(content.name);
+                setUser({name: content.name, isAuthorized: true});
             }
 
             else{
-                setName(null);
-
+                setUser({name: null, isAuthorized: false});
+                
             }
         }
     )();
-});
-
+        
+},[]);
+    console.log("231")
     return (
         <Routes>
-            <Route path="/PersonalPageMain" element={<PersonalPageMain name={name} setName={setName}/>}/>
-            <Route path="/MyTimeTables" element={<MyTimeTable name={name} setName={setName}/>}/>
-            <Route path="/" element={(name == undefined) ? <StartPage name={name} setName={setName}/> : <MainPage name={name} setName={setName}/>}/>
+            <Route path="/PersonalPageMain" element={<PersonalPageMain user={user} setUser={setUser}/>}/>
+            <Route path="/MyTimeTables" element={<MyTimeTable user={user} setUser={setUser}/>}/>
             <Route path="/register" element={<RegisterPage />}/>
-            <Route path="/login" element={<LoginPage setName={setName}/>}/>
+            <Route path="/login" element={<LoginPage setUser={setUser}/>}/>
+            <Route path="/" element={(user.isAuthorized) ? <MainPage user={user} setUser={setUser}/> : <StartPage user={user} setUser={setUser}/>}/>
 
         </Routes>)
   
