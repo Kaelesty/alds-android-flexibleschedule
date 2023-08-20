@@ -24,6 +24,13 @@ public class GroupController : ControllerBase
         _groupRepository = groupRepository;
         _jwtService = jwtService;
     }
+
+    [HttpPost]
+    public IActionResult ChangePriority(GroupsUsersDto dto )
+    {
+        return Ok();
+    }
+    
     [HttpGet]
     public IActionResult GetFullTimeTable()
     {
@@ -66,8 +73,9 @@ public class GroupController : ControllerBase
         try
         {
             int userId = AuthCheck();
-
-            return Ok(_groupRepository.GetAllCodesByUserId(userId));
+            List<GroupsUsersDto> Codes = _groupRepository.GetAllCodesByUserId(userId);
+            
+            return Ok(Codes);
         }
         catch (Exception)
         {
