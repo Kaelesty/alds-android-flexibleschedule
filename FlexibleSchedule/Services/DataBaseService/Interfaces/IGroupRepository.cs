@@ -6,6 +6,8 @@ namespace FlexibleSchedule.Services.DataBaseService;
 
 public interface IGroupRepository
 {
+    void ChangePriority(int userId, int groupId, int currentPriority);
+
     Dictionary<int, int> GetAllPriorities(int userId);
 
     Group Create(Group group);

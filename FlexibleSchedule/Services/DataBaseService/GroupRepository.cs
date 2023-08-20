@@ -39,10 +39,14 @@ public class GroupRepository : IGroupRepository
     public void ConnectToGroup(ConnectGroupDto dto,int UserId)
     {
         User user = _context.Users.Include(u=>u.Groups).FirstOrDefault(sp=>sp.id==UserId);
-        
-        user.Groups.Add(_context.Groups.FirstOrDefault(g=>g.Code==dto.Code));
-        
+        Group group = _context.Groups.FirstOrDefault(g => g.Code == dto.Code);
+        user.Groups.Add(group);
         _context.SaveChanges();
+        var groupsUsers = _context.GroupsUsers.FirstOrDefault(g => g.GroupId == group.id && g.UserId == UserId);
+        groupsUsers.Priority = GetLastPriority(UserId) + 1;
+        _context.SaveChanges();
+
+        
 
     }
 
@@ -51,6 +55,7 @@ public class GroupRepository : IGroupRepository
         _context.GroupsUsers.Remove(
             _context.GroupsUsers.Where(g => g.GroupId == dto.GroupId & g.UserId == UserID).FirstOrDefault()
         );
+
         _context.SaveChanges();
     }
 
@@ -74,9 +79,16 @@ public class GroupRepository : IGroupRepository
     }
     
     //тут словарь ключ это id timetable а значение это приоритет этого timeTable
+    public void ChangePriority(int userId,int groupId,int currentPriority)
+    {
+        var groupsUsers = _context.GroupsUsers.FirstOrDefault(g => g.GroupId == groupId && g.UserId == userId);
+        groupsUsers.Priority = currentPriority;
+        _context.SaveChanges();
+    }
+
     public Dictionary<int, int> GetAllPriorities(int userId)
     {
-        Dictionary<int, int> Priority = new Dictionary<int, int>();
+        Dictionary<int, int> priority = new Dictionary<int, int>();
 
         List<Group> Groups = _context.GroupsUsers
             .Where(u => u.UserId == userId)
@@ -84,28 +96,32 @@ public class GroupRepository : IGroupRepository
         
         foreach (var group in Groups)
         {
-            Priority.Add(group.TimeTable.id,GetCurrentPriority(group.id,userId));
+            priority.Add(group.TimeTable.id,GetCurrentPriority(group.id,userId));
         }
 
-        return Priority;
+        return priority;
     }
-
 
 
     public List<GroupsUsersDto> GetAllCodesByUserId(int id)
     {
+        GetAllTimeTables(id);
+        Dictionary<int,int> Priorities = GetAllPriorities(id);
         List<GroupsUsersDto> Codes = new List<GroupsUsersDto>();
-
+    
         IEnumerable<int> GroupsId = GetAllGroupIdByUserId(id);
         
-        IEnumerable<Group> Groups = _context.Groups.Where(g => GroupsId.Contains(g.id));
+        IEnumerable<Group> Groups = _context.Groups
+            .Include(g=>g.TimeTable)
+            .Where(g => GroupsId.Contains(g.id));
         
         foreach (var group in Groups)
         {
             Codes.Add(new GroupsUsersDto
             {
                 GroupId = group.id,
-                Code = group.Code
+                Code = group.Code,
+                priority = Priorities[group.TimeTable.id]
             });
 
         }

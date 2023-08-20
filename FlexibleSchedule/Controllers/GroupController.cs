@@ -28,6 +28,8 @@ public class GroupController : ControllerBase
     [HttpPost]
     public IActionResult ChangePriority(GroupsUsersDto dto )
     {
+        int userId = AuthCheck();
+        _groupRepository.ChangePriority(userId,dto.GroupId,dto.priority);
         return Ok();
     }
     
@@ -74,7 +76,7 @@ public class GroupController : ControllerBase
         {
             int userId = AuthCheck();
             List<GroupsUsersDto> Codes = _groupRepository.GetAllCodesByUserId(userId);
-            
+            Console.WriteLine();
             return Ok(Codes);
         }
         catch (Exception)

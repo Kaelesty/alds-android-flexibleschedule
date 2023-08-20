@@ -38,30 +38,43 @@ const Codes = (Props) => {
     const [code,setCode] = useState()
     const PriorityHandler = (event)=>{
         event.preventDefault()
+        let isValid = true
         let codes = new Map();
         const MainForm = document.getElementById('form')
         let arrayWithPriority = []
-        for(let i =0;i<MainForm.childNodes.length - 1;i++) {
-            let value = MainForm.childNodes[i].childNodes[3].value
-            let key = MainForm.childNodes[i].childNodes[3].id
+        console.log("len",MainForm.childNodes.length -1)
+        for(let i =0;i<MainForm.childNodes.length -1;i++) {
+            let value = MainForm.childNodes[i].childNodes[3].childNodes[0].value
+            let key = MainForm.childNodes[i].childNodes[3].childNodes[0].id
+            let code = MainForm.childNodes[i].childNodes[1].nodeValue
             if(value <1 || arrayWithPriority.includes(value)){
+
                 alert("Приоритеты должны быть больше 0 и не должны повторяться")
-                break
+                isValid = false
             }
-                arrayWithPriority.push(value)
-                codes.set(key, value)
+            arrayWithPriority.push(value)
+
         }
-        console.log(JSON.stringify({
-            codes
-        }))
-        fetch('api/Group/ChangePriority', {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include',
-            body: JSON.stringify({
-                CodesD: codes.toString()
-            })
-        });
+        if(isValid)
+        for(let i =0;i<MainForm.childNodes.length -1;i++) {
+        let value = MainForm.childNodes[i].childNodes[3].childNodes[0].value
+        let key = MainForm.childNodes[i].childNodes[3].childNodes[0].id
+        let code = MainForm.childNodes[i].childNodes[1].nodeValue
+
+        if(isValid){
+            fetch('api/Group/ChangePriority', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify({
+                    GroupId: key,
+                    Code: code,
+                    priority: value,
+                })
+            });       
+        }
+            
+        }
         GetCodes()
     }
     return (
@@ -71,7 +84,8 @@ const Codes = (Props) => {
             <span onSubmit={PriorityHandler} className="code">
                 Код группы: {code.code} Приоритет - 
                 
-                <Input id={code.groupId} className="input" type={"number"} placeholder={code.priority}></Input>
+                <MyInput Code={code}></MyInput>
+                Текущий приоритет - {code.priority}
             <Button  onClick ={()=>Delete(code)}>Удалить</Button>
 
             </span>
@@ -83,5 +97,20 @@ const Codes = (Props) => {
         </>
     );
 };
-
 export default Codes;
+
+const MyInput = ({Code}) => {
+    const [code, setCode] = useState();
+    return (
+        <div>
+            <input
+                className="input"
+                type={"number"}
+                id={Code.groupId}
+                value={code}
+                onChange={({ target: { value } }) =>value > 0  ? setCode(value) : setCode("")}
+            />
+        </div>
+    );
+}
+
