@@ -24,23 +24,38 @@ public class GroupController : ControllerBase
         _groupRepository = groupRepository;
         _jwtService = jwtService;
     }
-    [HttpGet]
-    public IActionResult GetFullTimeTable()
+    
+    [HttpPost]
+    public IActionResult CreateGroup(GroupDto groupDto)
     {
         try
         {
-            TimeTableCombiner timeTableCombiner = new TimeTableCombiner();
-            int userId = AuthCheck();
-            List<TimeTable> timeTables = _groupRepository.GetAllTimeTables(userId);
-            Dictionary<int,int> priorities = _groupRepository.GetAllPriorities(userId);
-            return Ok(timeTableCombiner.GetFullSchedule(timeTables,priorities));
+            int creatorId = AuthCheck();
+            
+            Group group = new Group
+            {
+                Code = groupDto.Code,
+
+                TimeTable = groupDto.TimeTable,
+                CreatorId = creatorId,
+                Users = new List<User>()
+
+            };
+            bool isCreated = _groupRepository.Create(group);
+            if (isCreated)
+            {
+                return Ok();
+            }
+            return BadRequest("NotCreated");
+
         }
         catch (Exception)
         {
             return Unauthorized();
         }
-    }
 
+    }
+    
     [HttpPost]
     public IActionResult DeleteGroup(GroupsUsersDto dto)
     {
@@ -59,50 +74,6 @@ public class GroupController : ControllerBase
             return Unauthorized();
         }
     }
-
-    [HttpGet]
-    public IActionResult GetAllGroupCodes()
-    {
-        try
-        {
-            int userId = AuthCheck();
-
-            return Ok(_groupRepository.GetAllCodesByUserId(userId));
-        }
-        catch (Exception)
-        {
-            return Unauthorized();
-        }
-    }
-    
-    
-    [HttpPost]
-    public IActionResult CreateGroup(GroupDto groupDto)
-    {
-        try
-        {
-            int creatorId = AuthCheck();
-            
-            Group group = new Group
-            {
-                Code = groupDto.Code,
-
-                TimeTable = groupDto.TimeTable,
-                CreatorId = creatorId,
-                Users = new List<User>()
-
-            };
-            Group group_ = _groupRepository.Create(group);
-
-            return Created("sd",group);
-        }
-        catch (Exception)
-        {
-            return Unauthorized();
-        }
-
-    }
-    
     
     [HttpPost]
     public IActionResult ConnectToGroup(ConnectGroupDto CgroupDto)
@@ -121,6 +92,53 @@ public class GroupController : ControllerBase
         }
         
     }
+
+    [HttpPost]
+    public IActionResult ChangePriority(GroupsUsersDto dto )
+    {
+        int userId = AuthCheck();
+        _groupRepository.ChangePriority(userId,dto.GroupId,dto.priority);
+        return Ok();
+    }
+    
+    
+    
+    [HttpGet]
+    public IActionResult GetFullTimeTable()
+    {
+        try
+        {
+            TimeTableCombiner timeTableCombiner = new TimeTableCombiner();
+            int userId = AuthCheck();
+            List<TimeTable> timeTables = _groupRepository.GetAllTimeTables(userId);
+            Dictionary<int,int> priorities = _groupRepository.GetAllPriorities(userId);
+            return Ok(timeTableCombiner.GetFullSchedule(timeTables,priorities));
+        }
+        catch (Exception)
+        {
+            return Unauthorized();
+        }
+    }
+
+
+
+    [HttpGet]
+    public IActionResult GetAllGroupCodes()
+    {
+        try
+        {
+            int userId = AuthCheck();
+            List<GroupsUsersDto> Codes = _groupRepository.GetAllCodesByUserId(userId);
+            Console.WriteLine();
+            return Ok(Codes);
+        }
+        catch (Exception)
+        {
+            return Unauthorized();
+        }
+    }
+    
+
 
     private int AuthCheck()
     {

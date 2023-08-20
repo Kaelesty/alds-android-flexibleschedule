@@ -6,17 +6,19 @@ namespace FlexibleSchedule.Services.DataBaseService;
 
 public interface IGroupRepository
 {
+    void ChangePriority(int userId, int groupId, int currentPriority);
+
     Dictionary<int, int> GetAllPriorities(int userId);
 
-    Group Create(Group group);
+    bool Create(Group group);
     
     void ConnectToGroup(ConnectGroupDto dto,int userId);
     
-    void DeleteGroup(GroupsUsersDto dto, int UserID);
+    void DeleteGroup(GroupsUsersDto dto, int userId);
     
     List<GroupsUsersDto> GetAllCodesByUserId(int id);
     
-    List<TimeTable> GetAllTimeTables(int UserId);
+    List<TimeTable> GetAllTimeTables(int userId);
 
 
 }

@@ -2,10 +2,17 @@ import Header from "../Header/header__navigation";
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {Container} from "reactstrap";
+import {redirect, useNavigate} from "react-router-dom";
 
 export const PersonalPageMain = (props) => {
+    console.log(props.user.isAuthorized)
+    const navigate = useNavigate();
+
     const [maxSize,setMaxSize] = useState()
-    useEffect(()=>{    
+    useEffect(()=>{
+        if(props.user.isAuthorized === false){
+            navigate("/login")
+        }
         setMaxSize(3)
     },[])
     //todo добавить проверку авторизирован ли пользователь
@@ -52,12 +59,15 @@ export const PersonalPageMain = (props) => {
                 TimeTable
             })
         })
-        
         promise.then(res => {
-            if(res.status===201){
+            if(res.status===200){
                 alert("Расписание добавлено")
             }
-            else{
+            if(res.status===400){
+                alert("пользователь не может создать больше двух расписаний")
+
+            }
+            if(res.status===401){
                 alert("Ошибка! Расписание не добавлено, такой код уже существует")
             }
         })
