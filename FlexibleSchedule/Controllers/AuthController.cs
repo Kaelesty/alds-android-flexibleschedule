@@ -16,12 +16,12 @@ namespace Controllers;
 public class AuthController : ControllerBase
 {
 
-    private readonly IUserRepository _repository;
+    private readonly IUserRepository _userRepository;
     private readonly JwtService _jwtService;
 
-    public AuthController(IUserRepository repository,JwtService jwtService)
+    public AuthController(IUserRepository userRepository,JwtService jwtService)
     {
-        _repository = repository;
+        _userRepository = userRepository;
         _jwtService = jwtService;
     }
     [HttpPost]
@@ -34,13 +34,13 @@ public class AuthController : ControllerBase
             password = BCrypt.Net.BCrypt.HashPassword(dto.password)
             
         };
-        return Created("success", _repository.Create(user));
+        return Created("success", _userRepository.Create(user));
     }
 
     [HttpPost]
     public IActionResult Login(LoginDto dto)
     {
-        User user = _repository.GetByEmail(dto.email);
+        User user = _userRepository.GetByEmail(dto.email);
         if (user.email != dto.email || !BCrypt.Net.BCrypt.Verify(dto.password,user.password))
         {
             return BadRequest("invalid credentials");
@@ -53,7 +53,7 @@ public class AuthController : ControllerBase
             HttpOnly = true
         });
 
-        return Ok(_repository.GetByEmail(dto.email));
+        return Ok(_userRepository.GetByEmail(dto.email));
         
 
     }
@@ -70,7 +70,7 @@ public class AuthController : ControllerBase
 
             int userId = int.Parse(token.Issuer);
 
-            var user = _repository.GetById(userId);
+            var user = _userRepository.GetById(userId);
 
             return Ok(user);
         }

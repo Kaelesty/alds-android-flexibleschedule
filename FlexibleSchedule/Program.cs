@@ -23,6 +23,7 @@ builder.Services.AddDbContext<Context>(options =>{
         default: configurationName = "Jordenn";
         break;
     }
+
     options.UseMySql(builder.Configuration.GetConnectionString(configurationName),new MySqlServerVersion(new Version(10, 1, 40)));
 });
 var app = builder.Build();

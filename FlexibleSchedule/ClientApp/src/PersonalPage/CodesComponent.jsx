@@ -3,7 +3,7 @@ import {Button, Input} from "reactstrap";
 import style from "./styles.css"
 
 const Codes = (Props) => {
-    const [Codes, setCodes] = useState([]);
+    
     const GetCodes = () => {
         fetch("api/Group/GetAllGroupCodes")
             .then(response => {
@@ -32,46 +32,81 @@ const Codes = (Props) => {
     const [code,setCode] = useState()
     const PriorityHandler = (event)=>{
         event.preventDefault()
-        let isValid = true
-        const MainForm = document.getElementById('form')
-        let arrayWithPriority = []
-        console.log("len",MainForm.childNodes.length -1)
-        for(let i =0;i<MainForm.childNodes.length -1;i++) {
-            let value = MainForm.childNodes[i].childNodes[3].childNodes[0].value
-            let key = MainForm.childNodes[i].childNodes[3].childNodes[0].id
-            let code = MainForm.childNodes[i].childNodes[1].nodeValue
-            if(value <1 || arrayWithPriority.includes(value)){
-                alert("Приоритеты должны быть больше 0 и не должны повторяться")
-                isValid = false
-            }
-            arrayWithPriority.push(value)
-
+        console.log(Props.Codes)
+        
+        for(let i =0;i<Props.Codes.length;i++) {
+            let value = Props.Codes[i].priority
+            let key = Props.Codes[i].groupId
+            let code = Props.Codes[i].code
+            console.log("priority",value)
+            console.log("groupId",key)
+            fetch('api/Group/ChangePriority', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify({
+                    GroupId: key,
+                    Code: code,
+                    priority: value,
+                })
+            });       
         }
-        if(isValid){
-            for(let i =0;i<MainForm.childNodes.length -1;i++) {
-                let value = MainForm.childNodes[i].childNodes[3].childNodes[0].value
-                let key = MainForm.childNodes[i].childNodes[3].childNodes[0].id
-                let code = MainForm.childNodes[i].childNodes[1].nodeValue
-                fetch('api/Group/ChangePriority', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    credentials: 'include',
-                    body: JSON.stringify({
-                        GroupId: key,
-                        Code: code,
-                        priority: value,
-                    })
-                });       
+    }
+    
+    const [currentCard,setCurrentCard] = useState(null)
+    function dragStartHandler(e,code){
+        setCurrentCard(code)
+    }
+    function dragLeaveHandler(e){
+        e.target.style.background = '#000000'
+
+    }
+    function dragEndHandler(e,code){
+        e.target.style.background = '#000000'
+
+    }
+    function dragOverHandler(e){
+        e.preventDefault()
+        e.target.style.background = 'lightgray'
+
+    }
+    function dropHandler(e,code){
+        e.preventDefault()
+        e.target.style.background = '#000000'
+
+        Props.setCodes(Props.Codes.map(c=>{
+            if(c.groupId===code.groupId){
+                return {...c, priority: currentCard.priority}
             }
-            GetCodes()
+            if(c.groupId===currentCard.groupId){
+                return {...c, priority: code.priority}
+            }
+            return c
+        }))
+    }
+    const sortCard = (a,b) =>{
+        if(a.priority>b.priority){
+            return 1
+        }
+        else {
+            return -1
         }
     }
     return (
         <>
             <form id={'form'} onSubmit={PriorityHandler}>
-                {Props.Codes.map(code =>(
-                    <span onSubmit={PriorityHandler} className="code">
-                        Код группы: {code.code} Указать приоритет - <MyInput Code={code}></MyInput> - Текущий приоритет - {code.priority}
+                {Props.Codes.sort(sortCard).map(code =>(
+                    <span
+                        onDragStart={(e)=>dragStartHandler(e,code)}
+                        onDragEnd={(e)=>dragEndHandler(e)}
+                        onDragOver={(e)=>dragOverHandler(e)}
+                        onDragLeave={(e)=>dragLeaveHandler(e)}
+                        onDrop={(e)=>dropHandler(e,code)}
+                        onDragEnd={(e)=>PriorityHandler(e)}
+                        draggable={true}
+                        onSubmit={PriorityHandler} className="code"
+                    >
+                        Код группы: {code.code}
                     <Button  onClick ={()=>Delete(code)}>Удалить</Button>
                     </span>
                 ))}
