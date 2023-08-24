@@ -13,9 +13,7 @@ const Header = (props) => {
         window.location.reload()
     }
     let menu;
-    console.log("1sds")
-
-    console.log(props.user)
+    console.log(props.user.isAuthorized)
     if(props.user.isAuthorized === null){
         menu = (
             <p>Loading...</p>
@@ -33,7 +31,7 @@ const Header = (props) => {
             </nav>
         )
     } 
-    if(!props.user?.isAuthorized){
+    if(props.user?.isAuthorized===false){
         menu = (
             <nav className="header__nav">
                 <NavLink className="header__a" to="/login">Войти</NavLink>

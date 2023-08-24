@@ -2796,6 +2796,7 @@
           "Microsoft.AspNetCore.SpaProxy": "7.0.5",
           "Microsoft.EntityFrameworkCore": "7.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.9",
+          "Microsoft.SqlServer.Server": "1.0.0",
           "MySql.Data": "8.0.33",
           "Pomelo.EntityFrameworkCore.MySql": "7.0.0"
         },
@@ -8445,6 +8446,7 @@
       "FlexibleSchedule >= 1.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.9",
       "Microsoft.NET.Test.Sdk >= 17.5.0",
+      "Microsoft.SqlServer.Server >= 1.0.0",
       "coverlet.collector >= 3.2.0",
       "xunit >= 2.4.2",
       "xunit.runner.visualstudio >= 2.4.5"
@@ -8499,6 +8501,10 @@
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[17.5.0, )"
+          },
+          "Microsoft.SqlServer.Server": {
+            "target": "Package",
+            "version": "[1.0.0, )"
           },
           "coverlet.collector": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

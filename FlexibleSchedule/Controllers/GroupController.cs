@@ -1,15 +1,9 @@
-using System.Diagnostics;
 using auth.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.DataTransfersObjects;
-using Microsoft.AspNetCore.Http;
 using Models;
-using auth.Helpers;
 using FlexibleSchedule.Services.DataBaseService;
 using Helpers.ScheduleHandler;
-using Helpers.ScheduleHandler.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Services.DataBaseService;
 namespace Controllers;
 [ApiController]
 [Route("api/[controller]/[action]")]
@@ -59,8 +53,6 @@ public class GroupController : ControllerBase
     [HttpPost]
     public IActionResult DeleteGroup(GroupsUsersDto dto)
     {
-        Console.WriteLine(dto.Code);
-        Console.WriteLine(dto.GroupId);
         try
         {
             int userId = AuthCheck();

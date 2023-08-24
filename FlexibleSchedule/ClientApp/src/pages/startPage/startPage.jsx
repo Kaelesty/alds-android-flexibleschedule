@@ -9,7 +9,6 @@ const StartPage = (props) => {
         <div className={style.startPage}>
             <Header user={props.user} setUser={props.setUser}/>
             <StartPage__main />
-            {console.log("loc", loc)}
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Button, Input} from "reactstrap";
-import style from "./styles.css"
+import "./styles.css"
+import {Button} from "reactstrap";
 
 const Codes = (Props) => {
     
@@ -32,14 +32,10 @@ const Codes = (Props) => {
     const [code,setCode] = useState()
     const PriorityHandler = (event)=>{
         event.preventDefault()
-        console.log(Props.Codes)
-        
         for(let i =0;i<Props.Codes.length;i++) {
             let value = Props.Codes[i].priority
             let key = Props.Codes[i].groupId
             let code = Props.Codes[i].code
-            console.log("priority",value)
-            console.log("groupId",key)
             fetch('api/Group/ChangePriority', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -93,42 +89,26 @@ const Codes = (Props) => {
         }
     }
     return (
-        <>
-            <form id={'form'} onSubmit={PriorityHandler}>
-                {Props.Codes.sort(sortCard).map(code =>(
-                    <span
-                        onDragStart={(e)=>dragStartHandler(e,code)}
-                        onDragEnd={(e)=>dragEndHandler(e)}
-                        onDragOver={(e)=>dragOverHandler(e)}
-                        onDragLeave={(e)=>dragLeaveHandler(e)}
-                        onDrop={(e)=>dropHandler(e,code)}
-                        onDragEnd={(e)=>PriorityHandler(e)}
-                        draggable={true}
-                        onSubmit={PriorityHandler} className="code"
-                    >
-                        Код группы: {code.code}
+        <form id={'form'} onSubmit={PriorityHandler}>
+            {Props.Codes.sort(sortCard).map(code =>(
+                <span
+                    onDragStart={(e)=>dragStartHandler(e,code)}
+                    onDragEnd={(e)=>dragEndHandler(e)}
+                    onDragOver={(e)=>dragOverHandler(e)}
+                    onDragLeave={(e)=>dragLeaveHandler(e)}
+                    onDrop={(e)=>dropHandler(e,code)}
+                    onDragEnd={(e)=>PriorityHandler(e)}
+                    draggable={true}
+                    onSubmit={PriorityHandler} className="code">
+                    Код группы: {code.code}
                     <Button  onClick ={()=>Delete(code)}>Удалить</Button>
-                    </span>
-                ))}
-                <button type={"submit"}>Сохранить приоритеты</button>
-            </form>
-        </>
+                </span>
+                
+            ))}
+            <button type={"submit"}>Сохранить приоритеты</button>
+        </form>
     );
 };
 export default Codes;
 
-const MyInput = ({Code}) => {
-    const [code, setCode] = useState();
-    return (
-        <div>
-            <input
-                className="input"
-                type={"number"}
-                id={Code.groupId}
-                value={code}
-                onChange={({ target: { value } }) =>value > 0  ? setCode(value) : setCode("")}
-            />
-        </div>
-    );
-}
 

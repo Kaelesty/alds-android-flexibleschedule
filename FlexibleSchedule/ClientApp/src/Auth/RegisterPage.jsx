@@ -8,7 +8,6 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
     const submit = async (e) => {
-        console.log(name)
         e.preventDefault();
         await fetch('/api/Auth/Register', {
             method: 'POST',

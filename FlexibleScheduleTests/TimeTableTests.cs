@@ -195,7 +195,6 @@ public class GroupRepositoryTests
         {
             for(int j = 0;j< result.Days[i].Pairs.Count;j++)
             {
-                Console.WriteLine($"{result.Days[i].Pairs[j].Time} -- {exception.Days[i].Pairs[j].Time}");
                 if (result.Days[i].Pairs[j].Time != exception.Days[i].Pairs[j].Time)
                 {
                     return false;

@@ -21,7 +21,7 @@ public class GroupRepository : IGroupRepository
     public bool Create(Group group) //todo добавить проверку, чтобы пользователь не мог создать больше двух расписаний!!!
     {
         User creator = _context.Users.FirstOrDefault(sp=>sp.id==group.CreatorId)!;
-        if (_context.GroupsUsers.Count(g => g.UserId == creator.id)<2)
+        if (_context.Groups.Count(g => g.CreatorId == creator.id)<2)
         {
             _context.Days.AddRange(group.TimeTable.Days);
 

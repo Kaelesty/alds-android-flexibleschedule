@@ -7,7 +7,6 @@ const Lesson = (props) => {
             <p className={style.lesson__p}>{props.para.info}</p>
             <p className={style.lesson__p}>{props.para.place}</p>
             <p className={style.lesson__p}>{props.para.teacher}</p>
-            {console.log("les")}
         </div>
     )
 }

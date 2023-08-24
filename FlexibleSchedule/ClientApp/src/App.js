@@ -32,7 +32,6 @@ function App() {
     )();
         
 },[]);
-    console.log("231")
     return (
         <Routes>
             <Route path="/PersonalPageMain" element={<PersonalPageMain user={user} setUser={setUser}/>}/>

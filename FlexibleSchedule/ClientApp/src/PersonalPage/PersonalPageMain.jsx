@@ -5,7 +5,6 @@ import {Container} from "reactstrap";
 import {redirect, useNavigate} from "react-router-dom";
 
 export const PersonalPageMain = (props) => {
-    console.log(props.user.isAuthorized)
     const navigate = useNavigate();
 
     const [maxSize,setMaxSize] = useState()
@@ -25,9 +24,7 @@ export const PersonalPageMain = (props) => {
         for(let i =0;i<subForms.length;i++){
             const Day = {pairs:[]}
             for(let j =0;j<subForms[i].childNodes.length;j++) {
-                // console.log(subForms[i].childNodes[j])
                 const subsubForm = subForms[i].childNodes[j]
-                // console.log(subsubForm)
                 const Time = subsubForm[0]
                 const Info = subsubForm[1]
                 const Place = subsubForm[2]
