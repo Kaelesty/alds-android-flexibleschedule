@@ -14,6 +14,7 @@ const MainPage = (props) => {
                 setTimeTable(responseJson)
             })
     }, [])
+
     if (TimeTable !== undefined) {
         return (
             <>

@@ -23,7 +23,8 @@ builder.Services.AddDbContext<Context>(options =>{
         default: configurationName = "Jordenn";
         break;
     }
-
+//     options.UseSqlServer("server=sql.bsite.net\\MSSQL2016;user=jordenn123_;database=jordenn123_;password=123;TrustServerCertificate=True;Encrypt=false");
+// });
     options.UseMySql(builder.Configuration.GetConnectionString(configurationName),new MySqlServerVersion(new Version(10, 1, 40)));
 });
 var app = builder.Build();

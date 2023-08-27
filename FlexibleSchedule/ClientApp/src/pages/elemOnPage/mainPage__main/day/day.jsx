@@ -12,11 +12,20 @@ const week = [
 ]
 
 const Day = (props) => {
+    const sortPairs = (a,b) =>{
+        if(a.time>b.time){
+            return 1
+        }
+        else {
+            return -1
+        }
+    }
+
     return (
         <div className={"day id" + props.id} id={props.id}>
             <div style={{fontWeight:"bold", textAlign:"center"}}>{week[props.id%7]}</div>
             <div className='day__container'>
-                {props.para.pairs.map(elem =>
+                {props.para.pairs.sort(sortPairs).map(elem =>
                     <Lesson pair={elem}/>
                 )}
             </div>
