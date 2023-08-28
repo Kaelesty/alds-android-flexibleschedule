@@ -7,7 +7,7 @@ const StartPage = (props) => {
     const loc = useLocation()
     return (
         <div className={style.startPage}>
-            <Header name={props.name} setName={props.setName}/>
+            <Header user={props.user} setUser={props.setUser}/>
             <StartPage__main />
             {console.log("loc", loc)}
         </div>

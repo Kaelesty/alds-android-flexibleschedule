@@ -9,22 +9,31 @@ const Header = (props) => {
             credentials: 'include',
         });
 
-        props.setName(null);
+        props.setUser({name: null, isAuthorized: false});
         window.location.reload()
     }
     let menu;
-    console.log(props.name)
-    if (props.name !== null) { // не забыть поменять
+    console.log("1sds")
+
+    console.log(props.user)
+    if(props.user.isAuthorized === null){
+        menu = (
+            <p>Loading...</p>
+        );
+
+    }
+    if (props.user?.isAuthorized) { // не забыть поменять
         menu = (
             <nav className="header__nav">
                 <Link to="/" className="header__a"  >Главная страница </Link>
-                <Link to="/" className="header__a" onClick={logout} >Выйти </Link>
-                <Link to="/PersonalPageMain" className="header__a" onClick={window.location.reload} >{props.name}</Link>
                 <Link to="/MyTimeTables" className="header__a" >Мои Расписания</Link>
+                <Link to="/PersonalPageMain" className="header__a"  >{props.user.name}</Link>
+                <Link to="/" className="header__a" onClick={logout} >Выйти </Link>
 
             </nav>
         )
-    } if(props.name === null){
+    } 
+    if(!props.user?.isAuthorized){
         menu = (
             <nav className="header__nav">
                 <NavLink className="header__a" to="/login">Войти</NavLink>
@@ -33,6 +42,7 @@ const Header = (props) => {
         );
 
     }
+
     
     return (
         menu

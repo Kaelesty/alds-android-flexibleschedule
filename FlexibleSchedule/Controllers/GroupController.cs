@@ -31,8 +31,9 @@ public class GroupController : ControllerBase
         {
             TimeTableCombiner timeTableCombiner = new TimeTableCombiner();
             int userId = AuthCheck();
-            TimeTable timeTable = _groupRepository.GetTimeTableByGroupId(1);
-            return Ok(timeTable);
+            List<TimeTable> timeTables = _groupRepository.GetAllTimeTables(userId);
+            Dictionary<int,int> priorities = _groupRepository.GetAllPriorities(userId);
+            return Ok(timeTableCombiner.GetFullSchedule(timeTables,priorities));
         }
         catch (Exception)
         {
@@ -92,6 +93,7 @@ public class GroupController : ControllerBase
 
             };
             Group group_ = _groupRepository.Create(group);
+
             return Created("sd",group);
         }
         catch (Exception)

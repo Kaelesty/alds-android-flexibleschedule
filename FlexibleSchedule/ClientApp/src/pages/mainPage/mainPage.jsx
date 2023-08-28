@@ -4,7 +4,7 @@ import Header from '../../Header/header__navigation';
 
 const MainPage = (props) => {
 
-    const [TimeTable, setTimeTable] = useState();
+    const [TimeTable, setTimeTable] = useState(undefined);
     useEffect(() => {
         fetch("api/Group/GetFullTimeTable")
             .then(response => {
@@ -14,18 +14,17 @@ const MainPage = (props) => {
                 setTimeTable(responseJson)
             })
     }, [])
-    console.log("mas", TimeTable)
-    if (TimeTable != undefined) {
+    if (TimeTable !== undefined) {
         return (
             <>
-            <Header name={props.name} setName={props.setName} />
+            <Header user={props.user} setUser={props.setUser} />
             <MainPage__main mas={TimeTable} />
             </>
             
         );
     } else {
         return (
-            <h1>Расписаний не найдено</h1>
+            <h1>Loading...</h1>
         )
     }
 

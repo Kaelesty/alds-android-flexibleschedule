@@ -41,15 +41,11 @@ public class AuthController : ControllerBase
     public IActionResult Login(LoginDto dto)
     {
         User user = _repository.GetByEmail(dto.email);
-        if (user.email != dto.email)
+        if (user.email != dto.email || !BCrypt.Net.BCrypt.Verify(dto.password,user.password))
         {
             return BadRequest("invalid credentials");
         }
         
-        if (!BCrypt.Net.BCrypt.Verify(dto.password,user.password))
-        {
-            return BadRequest("invalid credentials");
-        }
         var jwt = _jwtService.Generate(user.id);
 
         Response.Cookies.Append("jwt", jwt, new CookieOptions

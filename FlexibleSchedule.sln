@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexibleSchedule", "FlexibleSchedule\FlexibleSchedule.csproj", "{0057C23F-3064-49C1-9BD2-79E0807940F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexibleScheduleTests", "FlexibleScheduleTests\FlexibleScheduleTests.csproj", "{0B880F51-3624-4BD7-902B-DBB10F2D9370}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{0057C23F-3064-49C1-9BD2-79E0807940F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0057C23F-3064-49C1-9BD2-79E0807940F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0057C23F-3064-49C1-9BD2-79E0807940F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B880F51-3624-4BD7-902B-DBB10F2D9370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B880F51-3624-4BD7-902B-DBB10F2D9370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B880F51-3624-4BD7-902B-DBB10F2D9370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B880F51-3624-4BD7-902B-DBB10F2D9370}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

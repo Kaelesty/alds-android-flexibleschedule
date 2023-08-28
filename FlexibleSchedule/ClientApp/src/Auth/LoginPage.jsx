@@ -19,7 +19,7 @@ const Login = (props) => {
             })
         });
         const content = await response.json();
-        props.setName(content.name);
+        props.setUser({name:content.name, isAuthorized: true});
         setRedirect(true);
     }
 

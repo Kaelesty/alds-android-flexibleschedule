@@ -7,8 +7,8 @@ import Header from "../Header/header__navigation";
 const MyTimeTable = (props) => {
     const [redirect, setRedirect] = useState(false);
     const [Codes, setCodes] = useState([]);
-
-    useEffect(()=>{
+    const [code,setCode] = useState()
+    const GetCodes = () => {
         fetch("api/Group/GetAllGroupCodes")
             .then(response => {
                 return response.json()
@@ -16,8 +16,12 @@ const MyTimeTable = (props) => {
             .then(responseJson => {
                 setCodes(responseJson)
             })
+    }
+    
+    useEffect(()=>{
+        GetCodes()
     },[])
-    const [code,setCode] = useState()
+    
     const submit = async (e) => {
         e.preventDefault();
         await fetch('/api/Group/ConnectToGroup', {
@@ -29,15 +33,12 @@ const MyTimeTable = (props) => {
             })
             
         });
-    }
-    if (redirect) {
-        return <Navigate to="/"/>;
+        await GetCodes()
     }
     
-    console.log(Codes)
     return (
         <>
-            <Header name={props.name} setName={props.setName}/>
+            <Header user={props.user} setUser={props.setUser}/>
 
             <form onSubmit={submit}>
             <h1 className="h3 mb-3 fw-normal">Введите код группы для присоединения</h1>
@@ -48,7 +49,7 @@ const MyTimeTable = (props) => {
             <button className="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
         </form>
         <div>
-            <CodesComponent></CodesComponent>
+            <CodesComponent GetCodes={GetCodes} Codes={Codes} setCodes={setCodes}></CodesComponent>
         </div>
         </>
     );

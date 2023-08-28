@@ -3,9 +3,9 @@ import React, {useState} from "react";
 
 export const PersonalPageMain = (props) => {
     const [maxSize,setMaxSize] = useState()
-    window.onload = function() { // можно также использовать window.addEventListener('load', (event) => {
+    useEffect(()=>{    
         setMaxSize(3)
-    };  
+    },[])
     //todo добавить проверку авторизирован ли пользователь
     const MainForm = document.getElementById('form')
     const onSubmit = (event) =>{
@@ -29,6 +29,10 @@ export const PersonalPageMain = (props) => {
                     Place: Place.value,
                     Teacher: Teacher.value
                 }
+                if(!((Pair.Time=="" && Pair.Info=="" && Pair.Place=="" && Pair.Teacher=="") || (Pair.Time!="" && Pair.Info!="" && Pair.Place!="" && Pair.Teacher!=""))){
+                    alert("у предмета должны быть заполнены все поля, либо не заполнено ни одно")
+                    return
+                }
                 if(!(Pair.Time==="" && Pair.Info==="" && Pair.Place==="" && Pair.Teacher==="")){
                     Day.pairs.push(Pair)
                 }
@@ -36,7 +40,6 @@ export const PersonalPageMain = (props) => {
                 TimeTable.days.push(Day)
             
         }
-        console.log(TimeTable)
         const code = MainForm.querySelector('[name="Code"]').value
         const promise = fetch('api/Group/CreateGroup', {
             method: 'POST',
@@ -88,7 +91,7 @@ export const PersonalPageMain = (props) => {
     }
     return (
         < >
-            <Header name={props.name} setName={props.setName}/>
+            <Header user={props.user} setUser={props.setUser}/>
             <div>
                 Максимальное кол-во пар за день -  
             <input className={"MaxSize"} onChange={onChangeMax} required={true} type={"number"} name={'MaxSize'} value={maxSize}></input>
