@@ -1,6 +1,69 @@
 import Header from "../Header/header__navigation";
 import React, {useState} from "react";
 
+const NewTimeTable__main = (props) => {
+    const [maxSize,setMaxSize] = useState()
+    window.onload = function() { // можно также использовать window.addEventListener('load', (event) => {
+        setMaxSize(3)
+    };
+    //todo добавить проверку авторизирован ли пользователь
+    const MainForm = document.getElementById('form')
+    const onSubmit = (event) =>{
+        const TimeTable = {days:[]}
+        setMaxSize(maxSize)
+        event.preventDefault()
+        const subForms = MainForm.querySelectorAll('[id=subform]')
+        for(let i =0;i<subForms.length;i++){
+            const Day = {pairs:[]}
+            for(let j =0;j<subForms[i].childNodes.length;j++) {
+                // console.log(subForms[i].childNodes[j])
+                const subsubForm = subForms[i].childNodes[j]
+                // console.log(subsubForm)
+                const Time = subsubForm[0]
+                const Info = subsubForm[1]
+                const Place = subsubForm[2]
+                const Teacher = subsubForm[3]
+                const Pair = {
+                    Time: Time.value,
+                    Info: Info.value,
+                    Place: Place.value,
+                    Teacher: Teacher.value
+                }
+                if(!(Pair.Time==="" && Pair.Info==="" && Pair.Place==="" && Pair.Teacher==="")){
+                    Day.pairs.push(Pair)
+                }
+            }
+                TimeTable.days.push(Day)
+            
+        }
+        console.log(TimeTable)
+        const code = MainForm.querySelector('[name="Code"]').value
+        const promise = fetch('api/Group/CreateGroup', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({
+                code,
+                TimeTable
+            })
+        })
+        
+        promise.then(res => {
+            if(res.status===201){
+                alert("Расписание добавлено")
+            }
+            else{
+                alert("Ошибка! Расписание не добавлено, такой код уже существует")
+            }
+        })
+        }
+    return (
+        <>
+
+        </>
+    );
+}
+
 export const PersonalPageMain = (props) => {
     const [maxSize,setMaxSize] = useState()
     window.onload = function() { // можно также использовать window.addEventListener('load', (event) => {
@@ -62,7 +125,7 @@ export const PersonalPageMain = (props) => {
     const GetPair = (NumberDay,NumberPair) =>{
         return <div >
             <input className={'Pair'} placeholder={'Время'} type={"text"} name={'Time' + NumberDay+NumberPair}></input>
-            <input className={'Pair'} placeholder={'Информация'} type={"text"} name={'Info' + NumberDay+NumberPair}></input>
+            <input className={'Pair'} placeholder={'Название'} type={"text"} name={'Info' + NumberDay+NumberPair}></input>
             <input className={'Pair'} placeholder={'Место'} type={"text"} name={'Place' + NumberDay+NumberPair}></input>
             <input  className={'Pair'} placeholder={'Преподаватель'} type={"text"} name={'Teacher' + NumberDay+NumberPair}></input>
         </div>;

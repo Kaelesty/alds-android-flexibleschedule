@@ -20,3 +20,7 @@
 .lesson__place, .lesson__teacher {
     font-size: 0.9em;
 }
+
+.lesson__info, .lesson__teacher {
+    text-transform: capitalize;
+}

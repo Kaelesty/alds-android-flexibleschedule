@@ -24,7 +24,7 @@ const Login = (props) => {
     }
 
     if (redirect) {
-        return <Navigate to="/"/>;
+        return <Navigate to="/" />;
     }
     return (
         <form onSubmit={submit}>

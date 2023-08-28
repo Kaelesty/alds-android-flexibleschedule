@@ -1,7 +1,7 @@
 .main {
     display: grid;
-    grid-template-columns:0 1fr 0% 1fr 0% 1fr 1% 1fr 0% 1fr 0% 1fr 0;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns:auto auto;
+    grid-template-rows: auto auto 5% auto auto;
     justify-items: center;
     align-items: center;
 }
