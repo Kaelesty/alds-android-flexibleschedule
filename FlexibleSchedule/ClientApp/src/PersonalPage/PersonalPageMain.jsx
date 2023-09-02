@@ -1,5 +1,5 @@
 import Header from "../Header/header__navigation";
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 
 export const PersonalPageMain = (props) => {
     const [maxSize,setMaxSize] = useState()

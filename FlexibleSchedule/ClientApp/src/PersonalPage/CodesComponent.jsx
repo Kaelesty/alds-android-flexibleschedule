@@ -3,7 +3,6 @@ import {Button} from "reactstrap";
 
 
 const Codes = (Props) => {
-    const [Codes, setCodes] = useState([]);
     const GetCodes = () => {
         fetch("api/Group/GetAllGroupCodes")
             .then(response => {
@@ -35,8 +34,6 @@ const Codes = (Props) => {
                 Props.setCodes(responseJson)
             })
     },[])
-    const [code,setCode] = useState()
-    
     return (
         <>
         {Props.Codes.map(code =>(
