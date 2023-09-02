@@ -1,5 +1,7 @@
 import React, {SyntheticEvent, useState} from 'react';
 import {Navigate} from "react-router-dom";
+import "./Auth.css";
+
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -24,11 +26,11 @@ const Login = (props) => {
     }
 
     if (redirect) {
-        return <Navigate to="/"/>;
+        return <Navigate to="/" />;
     }
     return (
-        <form onSubmit={submit}>
-            <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <form onSubmit={submit}  className={"formAuth"}>
+            <h1 className="h3 mb-3 fw-normal text-center" >Please sign in</h1>
             <input type="email" className="form-control" placeholder="Email address" required
                    onChange={e => setEmail(e.target.value)}
             />

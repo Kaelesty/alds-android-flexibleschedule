@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Navigate} from 'react-router-dom';
+import "./Auth.css";
 
 
 const Register = () => {
@@ -27,8 +28,8 @@ const Register = () => {
     }
 
     return (
-        <form onSubmit={submit}>
-            <h1 className="h3 mb-3 fw-normal">Please register</h1>
+        <form onSubmit={submit} className={"formAuth"}>
+            <h1 className="h3 mb-3 fw-normal text-center">Please register</h1>
 
             <input className="form-control" placeholder="Name" required
                    onChange={e => setName(e.target.value)}
