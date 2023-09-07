@@ -1,8 +1,6 @@
 using Helpers.ScheduleHandler;
 using Helpers.ScheduleHandler.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Models;
-using Services.DataBaseService;
 
 namespace FlexibleScheduleTests;
 
