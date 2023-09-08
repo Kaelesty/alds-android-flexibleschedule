@@ -13,15 +13,20 @@ builder.Services.AddScoped<IGroupRepository,GroupRepository>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddDbContext<Context>(options =>{
     string configurationName;
-    switch(System.Environment.MachineName){
-        case "DESKTOP-AI7DA69": 
+    switch (System.Environment.MachineName)
+    {
+        case "DESKTOP-AI7DA69":
             configurationName = "alexbelks";
-        break;
-        case "LAPTOP-NCL2H5HG": 
+            break;
+        case "LAPTOP-NCL2H5HG":
             configurationName = "Evgesha";
-        break;
-        default: configurationName = "Jordenn";
-        break;
+            break;
+        case "LAPTOP-BKG9A85Q":
+            configurationName = "kaelesty";
+            break;
+        default:
+            configurationName = "Jordenn";
+            break;
     }
     options.UseMySql(builder.Configuration.GetConnectionString(configurationName),new MySqlServerVersion(new Version(10, 1, 40)));
 });
