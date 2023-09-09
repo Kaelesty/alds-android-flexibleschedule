@@ -13,15 +13,20 @@ builder.Services.AddScoped<IGroupRepository,GroupRepository>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddDbContext<Context>(options =>{
     string configurationName;
-    switch(System.Environment.MachineName){
-        case "DESKTOP-AI7DA69": 
+    switch (System.Environment.MachineName)
+    {
+        case "DESKTOP-AI7DA69":
             configurationName = "alexbelks";
-        break;
-        case "LAPTOP-NCL2H5HG": 
+            break;
+        case "LAPTOP-NCL2H5HG":
             configurationName = "Evgesha";
-        break;
-        default: configurationName = "Jordenn";
-        break;
+            break;
+        case "LAPTOP-BKG9A85Q":
+            configurationName = "kaelesty";
+            break;
+        default:
+            configurationName = "Jordenn";
+            break;
     }
 //     options.UseSqlServer("server=sql.bsite.net\\MSSQL2016;user=jordenn123_;database=jordenn123_;password=123;TrustServerCertificate=True;Encrypt=false");
 // });
