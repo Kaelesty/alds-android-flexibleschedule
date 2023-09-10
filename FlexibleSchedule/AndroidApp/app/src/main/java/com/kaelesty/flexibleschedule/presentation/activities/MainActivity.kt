@@ -2,13 +2,16 @@ package com.kaelesty.flexibleschedule.presentation.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.kaelesty.flexibleschedule.R
 import com.kaelesty.flexibleschedule.databinding.ActivityMainBinding
 import com.kaelesty.flexibleschedule.presentation.fragments.EditFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.ScheduleFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.SelectFragment
-import com.kaelesty.flexibleschedule.presentation.fragments.UserFragment
+import com.kaelesty.flexibleschedule.presentation.fragments.user.UserFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,30 +28,37 @@ class MainActivity : AppCompatActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(binding.root)
 
+		supportFragmentManager.beginTransaction()
+			.replace(R.id.fragment_container, ScheduleFragment.newInstance())
+			.commit()
+
 		with(binding) {
 
+			Glide.with(this@MainActivity)
+				.load(R.drawable.bg)
+				.into(ivBackground)
+
 			imageSchedule.setOnClickListener {
-				Log.d("MainActivity", "Clicked!")
 				supportFragmentManager.beginTransaction()
-					.add(R.id.fragment_container, ScheduleFragment.newInstance(), FRAGMENT_TAG_SCHEDULE)
+					.replace(R.id.fragment_container, ScheduleFragment.newInstance())
 					.commit()
 			}
 
 			buttonSelect.setOnClickListener {
 				supportFragmentManager.beginTransaction()
-					.add(R.id.fragment_container, SelectFragment.newInstance(), FRAGMENT_TAG_SELECT)
+					.replace(R.id.fragment_container, SelectFragment.newInstance())
 					.commit()
 			}
 
 			buttonEdit.setOnClickListener {
 				supportFragmentManager.beginTransaction()
-					.add(R.id.fragment_container, EditFragment.newInstance(), FRAGMENT_TAG_EDIT)
+					.replace(R.id.fragment_container, EditFragment.newInstance())
 					.commit()
 			}
 
 			buttonUser.setOnClickListener {
 				supportFragmentManager.beginTransaction()
-					.add(R.id.fragment_container, UserFragment.newInstance(), FRAGMENT_TAG_USER)
+					.replace(R.id.fragment_container, UserFragment.newInstance())
 					.commit()
 			}
 

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kaelesty.flexibleschedule.R
+import com.kaelesty.flexibleschedule.databinding.FragmentScheduleBinding
+import com.kaelesty.flexibleschedule.databinding.FragmentUserBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,6 +21,10 @@ private const val ARG_PARAM2 = "param2"
  */
 class ScheduleFragment : Fragment() {
 
+	private val binding by lazy {
+		FragmentScheduleBinding.inflate(layoutInflater)
+	}
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 	}
@@ -28,7 +34,7 @@ class ScheduleFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_schedule, container, false)
+		return binding.root
 	}
 
 	companion object {
