@@ -19,7 +19,7 @@ class UserFragment : Fragment() {
 	}
 
 	private val viewModel: UserViewModel by lazy {
-		ViewModelProvider(this)[UserViewModel::class.java]
+		UserViewModelFactory(requireActivity(), requireActivity().application).create(UserViewModel::class.java)
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -148,6 +148,7 @@ class UserFragment : Fragment() {
 		viewModel.logoutState.observe(viewLifecycleOwner) {
 
 			with(binding) {
+				progressBar.visibility = View.GONE
 				logoutLayout.visibility = if (it.isVisible) View.VISIBLE else View.GONE
 				logoutEmail.text = it.email
 				logoutName.text = it.name
