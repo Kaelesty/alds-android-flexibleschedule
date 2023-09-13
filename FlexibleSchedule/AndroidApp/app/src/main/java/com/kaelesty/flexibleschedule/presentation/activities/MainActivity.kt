@@ -1,15 +1,16 @@
 package com.kaelesty.flexibleschedule.presentation.activities
 
+import android.annotation.SuppressLint
+import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.gif.GifDrawable
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.kaelesty.flexibleschedule.R
 import com.kaelesty.flexibleschedule.databinding.ActivityMainBinding
 import com.kaelesty.flexibleschedule.presentation.fragments.EditFragment
-import com.kaelesty.flexibleschedule.presentation.fragments.ScheduleFragment
+import com.kaelesty.flexibleschedule.presentation.fragments.schedule.ScheduleFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.SelectFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.user.UserFragment
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 		setContentView(binding.root)
 
 		supportFragmentManager.beginTransaction()
-			.replace(R.id.fragment_container, ScheduleFragment.newInstance())
+			.replace(R.id.fragment_container, UserFragment.newInstance())
 			.commit()
 
 		with(binding) {
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 				.load(R.drawable.bg)
 				.into(ivBackground)
 
-			imageSchedule.setOnClickListener {
+			buttonSchedule.setOnClickListener {
 				supportFragmentManager.beginTransaction()
 					.replace(R.id.fragment_container, ScheduleFragment.newInstance())
 					.commit()

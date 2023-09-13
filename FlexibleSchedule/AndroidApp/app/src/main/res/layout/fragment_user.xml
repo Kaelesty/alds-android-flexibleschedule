@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.fragments.user.UserFragment"
     app:cardBackgroundColor="@color/smoke"
     android:orientation="vertical"
-    android:paddingHorizontal="8dp"
+    android:layout_gravity="center"
+    android:gravity="center"
     >
 
     <ProgressBar
@@ -31,6 +32,7 @@
         android:orientation="vertical"
         android:padding="8dp"
         android:layout_marginTop="8dp"
+        android:layout_gravity="center"
         >
 
         <TextView
@@ -38,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="Регистрация"
             android:fontFamily="@font/roboto_light_family"
-            android:textSize="20sp"/>
+            android:textSize="24sp"/>
 
         <LinearLayout
             android:id="@+id/register_layout_hidden"
@@ -52,19 +54,22 @@
                 android:id="@+id/register_til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_light_family">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/register_tiet_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
+                    android:fontFamily="@font/roboto_light_family"
                     android:textSize="18sp"
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_til_name"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/roboto_light_family"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
 
@@ -72,6 +77,7 @@
                     android:id="@+id/register_tiet_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light_family"
                     android:hint="Имя"
                     android:textSize="18sp"
                     android:inputType="textPersonName"/>
@@ -79,12 +85,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_til_password"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/roboto_light_family"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/register_tiet_password"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/roboto_light_family"
                     android:layout_height="wrap_content"
                     android:hint="Пароль"
                     android:textSize="18sp"
@@ -92,9 +100,10 @@
             </com.google.android.material.textfield.TextInputLayout>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/register_button"
+                android:fontFamily="@font/roboto_light_family"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_background"
+                android:background="@drawable/button"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Зарегистрироваться"
@@ -122,7 +131,7 @@
             android:layout_height="wrap_content"
             android:text="Вход"
             android:fontFamily="@font/roboto_light_family"
-            android:textSize="20sp"/>
+            android:textSize="24sp"/>
 
         <LinearLayout
             android:id="@+id/login_layout_hidden"
@@ -136,11 +145,13 @@
                 android:id="@+id/login_til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light_family"
                 android:layout_marginTop="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/login_tiet_email"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/roboto_light_family"
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:textSize="18sp"
@@ -150,12 +161,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/login_til_password"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/roboto_light_family"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/login_tiet_password"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/roboto_light_family"
                     android:layout_height="wrap_content"
                     android:hint="Пароль"
                     android:textSize="18sp"
@@ -165,8 +178,9 @@
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_background"
+                android:background="@drawable/button"
                 android:layout_marginHorizontal="16dp"
+                android:fontFamily="@font/roboto_light_family"
                 android:layout_marginTop="16dp"
                 android:text="Войти"
                 android:textColor="@color/white"/>
@@ -193,7 +207,7 @@
             android:text="Пользователь"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto_light_family"
-            android:textSize="20sp"/>
+            android:textSize="24sp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -203,6 +217,7 @@
             <TextView
                 android:id="@+id/logout_email_title"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/roboto_light_family"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -213,6 +228,7 @@
                 android:id="@+id/logout_name_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light_family"
                 app:layout_constraintTop_toBottomOf="@id/logout_email_title"
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="Имя:   "
@@ -221,6 +237,7 @@
             <TextView
                 android:id="@+id/logout_email"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/roboto_light_family"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/logout_email_title"
                 app:layout_constraintStart_toEndOf="@id/logout_email_title"
@@ -230,6 +247,7 @@
                 android:id="@+id/logout_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light_family"
                 app:layout_constraintTop_toTopOf="@id/logout_name_title"
                 app:layout_constraintStart_toEndOf="@id/logout_name_title"
                 tools:text="Kaelesty"
@@ -241,7 +259,8 @@
             android:id="@+id/logout_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
+            android:fontFamily="@font/roboto_light_family"
+            android:background="@drawable/button"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:text="Выйти"

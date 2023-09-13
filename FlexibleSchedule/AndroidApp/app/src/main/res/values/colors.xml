@@ -10,4 +10,5 @@
     <color name="space_weak">#f9f8ff</color>
     <color name="space_medium">#8e8cb9</color>
     <color name="space_strong">#0a205a</color>
+    <color name="space_weakest">#CAC8F9</color>
 </resources>

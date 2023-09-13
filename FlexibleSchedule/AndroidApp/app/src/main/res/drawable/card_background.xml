@@ -4,6 +4,6 @@
         android:radius="4dp"/>
     <gradient
         android:angle="0"
-        android:startColor="@color/space_accent_strong"
-        android:endColor="@color/space_accent_weak" />
+        android:startColor="@color/space_weakest"
+        android:endColor="@color/space_weak" />
 </shape>
