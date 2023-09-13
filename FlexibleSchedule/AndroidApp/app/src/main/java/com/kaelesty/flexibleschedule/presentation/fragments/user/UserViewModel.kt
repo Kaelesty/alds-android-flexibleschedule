@@ -94,7 +94,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 			}
 			else {
 				result.body as UserResponse
-				onSuccessfulLogin(result.body.email, result.body.name)
+				onSuccessfulLogin(result.body.email, result.body.name, result.jwt?:"")
 			}
 		}
 	}
@@ -113,7 +113,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 		if (!email.contains("@")) {
 			emailError = "Нет символа '@'"
 		}
-		if (password.length < 6) {
+		if (password.length < 4) {
 			passwordError = "Слишком короткий пароль"
 		}
 
@@ -140,7 +140,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 			nameError = "Слишком короткое имя"
 		}
 
-		if (password.length < 6) {
+		if (password.length < 4) {
 			passwordError = "Слишком короткий пароль"
 		}
 
@@ -155,12 +155,12 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 		return emailError == "" && passwordError == "" && nameError == ""
 	}
 
-	private fun onSuccessfulLogin(email: String, name: String) {
+	private fun onSuccessfulLogin(email: String, name: String, jwt: String) {
 
 		viewModelScope.launch(Dispatchers.IO) {
 			saveUserUseCase.saveUser(
 				User(
-					name, email, true
+					name, email, true, jwt
 				)
 			)
 		}

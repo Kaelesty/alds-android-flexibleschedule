@@ -38,7 +38,8 @@ class UserRepo(val context: Context) : IUserRepo {
 		val response = authService.login(LoginDto(email, password))
 		Log.d("UserViewModel", "login " + response.code().toString())
 		if (response.code() == 200) {
-			return AuthUseCaseResult("OK", response.body())
+			var jwt = response.headers().values("Set-Cookie")[0]
+			return AuthUseCaseResult("OK", response.body(), jwt)
 		}
 		// TODO relocate strings to string_resources
 		return AuthUseCaseResult("Ошибка на сервере")
@@ -47,7 +48,7 @@ class UserRepo(val context: Context) : IUserRepo {
 	override suspend fun logout() {
 		authService.logout()
 		userDao.saveUser(
-			UserDbModel("", "", false)
+			UserDbModel("", "", false, "")
 		)
 	}
 
@@ -59,7 +60,7 @@ class UserRepo(val context: Context) : IUserRepo {
 
 	override fun getUser(): LiveData<User> {
 		return userDao.getUser().map {
-			if (it != null) UserMapper.DbModelToUser(it) else User("", "", false)
+			if (it != null) UserMapper.DbModelToUser(it) else User("", "", false, "")
 		}
 	}
 }

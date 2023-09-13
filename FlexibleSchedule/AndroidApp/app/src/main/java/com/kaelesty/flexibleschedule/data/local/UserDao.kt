@@ -11,7 +11,10 @@ import com.kaelesty.flexibleschedule.data.entities.UserDbModel
 interface UserDao {
 
 	@Query("SELECT * FROM user")
-	fun getUser(): LiveData<UserDbModel?>
+	fun getUser(): LiveData<UserDbModel>
+
+	@Query("SELECT * FROM user")
+	fun getStaticUser(): UserDbModel
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	fun saveUser(user: UserDbModel)

@@ -9,11 +9,13 @@ object UserMapper {
 		user.email,
 		user.name,
 		user.isAuthorized,
+		user.jwt
 	)
 
 	fun DbModelToUser(user: UserDbModel) = User(
 		user.name,
 		user.email,
 		user.isAuthorized,
+		user.jwt
 	)
 }

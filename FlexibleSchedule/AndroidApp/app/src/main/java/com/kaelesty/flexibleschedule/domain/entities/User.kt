@@ -4,4 +4,5 @@ data class User(
 	val name: String,
 	val email: String,
 	val isAuthorized: Boolean,
+	val jwt: String,
 )

@@ -8,5 +8,6 @@ data class UserDbModel(
 	val email: String,
 	val name: String,
 	val isAuthorized: Boolean,
+	val jwt: String,
 	@PrimaryKey val id: Int = 1,
 )
