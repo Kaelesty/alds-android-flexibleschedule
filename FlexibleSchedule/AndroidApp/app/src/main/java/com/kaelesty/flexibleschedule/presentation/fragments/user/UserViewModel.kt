@@ -7,94 +7,110 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kaelesty.flexibleschedule.data.UserRepo
+import com.kaelesty.flexibleschedule.data.repos.UserRepo
 import com.kaelesty.flexibleschedule.data.entities.UserResponse
+import com.kaelesty.flexibleschedule.data.repos.GroupRepo
+import com.kaelesty.flexibleschedule.domain.AuthReturnCode
 import com.kaelesty.flexibleschedule.domain.entities.User
 import com.kaelesty.flexibleschedule.domain.use_cases.GetUserUseCase
 import com.kaelesty.flexibleschedule.domain.use_cases.LoginUseCase
 import com.kaelesty.flexibleschedule.domain.use_cases.LogoutUseCase
 import com.kaelesty.flexibleschedule.domain.use_cases.RegisterUseCase
 import com.kaelesty.flexibleschedule.domain.use_cases.SaveUserUseCase
+import com.kaelesty.flexibleschedule.domain.use_cases.UpdateTimetableUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class UserViewModel(activity: Context, application: Application) : AndroidViewModel(application) {
 
-	private val repo = UserRepo(activity)
-	private val registerUseCase = RegisterUseCase(repo)
-	private val loginUseCase = LoginUseCase(repo)
-	private val logoutUseCase = LogoutUseCase(repo)
-	private val saveUserUseCase = SaveUserUseCase(repo)
-	private val getUserUseCase = GetUserUseCase(repo)
+	private val userRepo = UserRepo(activity)
+	private val registerUseCase = RegisterUseCase(userRepo)
+	private val loginUseCase = LoginUseCase(userRepo)
+	private val logoutUseCase = LogoutUseCase(userRepo)
+	private val saveUserUseCase = SaveUserUseCase(userRepo)
+	private val getUserUseCase = GetUserUseCase(userRepo)
+
+	private val groupRepo = GroupRepo(activity)
+	private val updateTimetableUseCase = UpdateTimetableUseCase(groupRepo)
 
 
-	private val _registerState: MutableLiveData<RegisterState> = MutableLiveData()
-	val registerState: LiveData<RegisterState> get() = _registerState
-
-	private val _loginState: MutableLiveData<LoginState> = MutableLiveData()
-	val loginState: LiveData<LoginState> get() = _loginState
-
-	private val _logoutState: MutableLiveData<LogoutState> = MutableLiveData()
-	val logoutState: LiveData<LogoutState> get() = _logoutState
+	private val _userState: MutableLiveData<UserState> = MutableLiveData()
+	val userState: LiveData<UserState> get() = _userState
 
 	init {
 
 		getUserUseCase.getUser().observe(activity as LifecycleOwner) { user ->
 			if (user.isAuthorized) {
-				_logoutState.postValue(LogoutState(
-					true, user.email, user.name
-				))
-
-				_loginState.postValue(LoginState(false))
-				_registerState.postValue(RegisterState(false))
-			}
-			else {
-				_logoutState.postValue(LogoutState(
-					false
-				))
-				_loginState.postValue(LoginState(true))
-				_registerState.postValue(RegisterState(true))
+				_userState.postValue(StateAuthorized(user.name, user.email) as UserState)
+			} else {
+				_userState.postValue(StateUnauthorized())
 			}
 		}
 	}
 
 	fun register(email: String, name: String, password: String) {
-
+		_userState.postValue(StateLoading())
 		if (! validateRegister(email, name, password)) {
 			return
 		}
 
 		viewModelScope.launch(Dispatchers.IO) {
 			val result = registerUseCase.registerUser(email, name, password)
-			if (result.message != "OK") {
-				_registerState.postValue(
-					RegisterState(true, "", "", "", result.message)
-				)
-				//TODO("Backend isn't handling duplicate emails?")
-			}
-			else {
-				Log.d("UserViewModel", email + " " + password)
-				login(email, password)
+			when (result.rc) {
+				AuthReturnCode.RC_REGISTER_OK -> {
+					login(email, password)
+				}
+
+				AuthReturnCode.RC_REGISTER_EMAIL_EXIST -> {
+					_userState.postValue(StateRegisterError("Email не найден"))
+				}
+
+				else -> {
+					_userState.postValue(
+						StateRegisterError(
+							"Ошибка на сервере"
+						)
+					)
+				}
 			}
 		}
 	}
 
 	fun login(email: String, password: String) {
-		if (!validateLogin(email, password)) {
+		_userState.postValue(StateLoading())
+		if (! validateLogin(email, password)) {
 			return
 		}
 
 		viewModelScope.launch(Dispatchers.IO) {
 			val result = loginUseCase.login(email, password)
-			if (result.message != "OK") {
-				_loginState.postValue(LoginState(true, "", "", result.message))
-			}
-			else {
-				result.body as UserResponse
-				onSuccessfulLogin(result.body.email, result.body.name, result.jwt?:"")
+			when (result.rc) {
+				AuthReturnCode.RC_LOGIN_OK -> {
+					result.body as UserResponse
+					onSuccessfulLogin(result.body.email, result.body.name, result.jwt ?: "")
+					_userState.postValue(StateAuthorized(result.body.name, result.body.email))
+				}
+
+				AuthReturnCode.RC_LOGIN_PASSWORD -> {
+					_userState.postValue(StateLoginError(
+						passwordMessage = "Неправильный пароль"
+					))
+				}
+
+				AuthReturnCode.RC_LOGIN_EMAIL -> {
+					_userState.postValue(StateLoginError(
+						emailMessage = "Email не найден"
+					))
+				}
+
+				else -> {
+					_userState.postValue(
+						StateRegisterError(
+							"Ошибка на сервере"
+						)
+					)
+				}
 			}
 		}
 	}
@@ -102,6 +118,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 	fun logout() {
 		viewModelScope.launch(Dispatchers.IO) {
 			logoutUseCase.logout()
+			_userState.postValue(StateUnauthorized())
 		}
 	}
 
@@ -110,16 +127,18 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 		var emailError: String = ""
 		var passwordError: String = ""
 
-		if (!email.contains("@")) {
+		if (! email.contains("@")) {
 			emailError = "Нет символа '@'"
 		}
 		if (password.length < 4) {
 			passwordError = "Слишком короткий пароль"
 		}
 
-		_loginState.postValue(LoginState(
-			true, emailError, passwordError, ""
-		))
+		_userState.postValue(
+			StateLoginError(
+				"", emailError, passwordError
+			)
+		)
 
 		return emailError == "" && passwordError == ""
 	}
@@ -144,13 +163,11 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 			passwordError = "Слишком короткий пароль"
 		}
 
-		_registerState.postValue(RegisterState(
-			true,
-			emailError,
-			nameError,
-			passwordError,
-			""
-		))
+		_userState.postValue(
+			StateRegisterError(
+				"", emailError, nameError, passwordError
+			)
+		)
 
 		return emailError == "" && passwordError == "" && nameError == ""
 	}
@@ -163,6 +180,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 					name, email, true, jwt
 				)
 			)
+			updateTimetableUseCase.updateTimetable()
 		}
 	}
 }

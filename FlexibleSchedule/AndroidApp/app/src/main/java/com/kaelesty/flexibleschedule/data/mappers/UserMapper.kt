@@ -1,6 +1,6 @@
-package com.kaelesty.flexibleschedule.data
+package com.kaelesty.flexibleschedule.data.mappers
 
-import com.kaelesty.flexibleschedule.data.entities.UserDbModel
+import com.kaelesty.flexibleschedule.data.entities.dbmodels.auth.UserDbModel
 import com.kaelesty.flexibleschedule.domain.entities.User
 
 object UserMapper {

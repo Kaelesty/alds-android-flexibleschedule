@@ -1,4 +1,4 @@
-package com.kaelesty.flexibleschedule.data.entities
+package com.kaelesty.flexibleschedule.data.entities.dtos.auth
 
 data class LoginDto(
 	val email: String,

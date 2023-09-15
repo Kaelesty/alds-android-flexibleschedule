@@ -108,50 +108,58 @@ class UserFragment : Fragment() {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 
-		viewModel.registerState.observe(viewLifecycleOwner) {
+		viewModel.userState.observe(requireActivity()) { state ->
 
-
-
-			it.toast?.let { toast ->
-				if (toast.isNotEmpty()) {
-					Toast.makeText(requireContext(), toast, Toast.LENGTH_SHORT).show()
+			when(state) {
+				is StateLoading -> {
+					binding.progressBar.visibility = View.VISIBLE
 				}
-			}
-
-			with(binding) {
-				registerLayoutButton.visibility = if (it.isVisible) View.VISIBLE else View.GONE
-
-				registerTilEmail.error = it.email
-				registerTilName.error = it.name
-				registerTilPassword.error = it.password
-			}
-
-		}
-
-		viewModel.loginState.observe(viewLifecycleOwner) {
-
-			it.toast?.let { toast ->
-				if (toast.isNotEmpty()) {
-					Toast.makeText(requireContext(), toast, Toast.LENGTH_SHORT).show()
+				is StateUnauthorized -> {
+					with(binding) {
+						progressBar.visibility = View.GONE
+						registerLayoutButton.visibility = View.VISIBLE
+						loginLayoutButton.visibility = View.VISIBLE
+						logoutLayout.visibility = View.GONE
+					}
 				}
-			}
 
-			with(binding) {
-				loginLayoutButton.visibility = if (it.isVisible) View.VISIBLE else View.GONE
+				is StateAuthorized -> {
+					with(binding) {
+						progressBar.visibility = View.GONE
+						registerLayoutButton.visibility = View.GONE
+						loginLayoutButton.visibility = View.GONE
+						logoutLayout.visibility = View.VISIBLE
 
-				loginTilEmail.error = it.email
-				loginTilPassword.error = it.password
-			}
+						logoutName.text = state.name
+						logoutEmail.text = state.email
+					}
+				}
 
-		}
+				is StateRegisterError -> {
+					state.toastMessage?.let {
+						Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+					}
 
-		viewModel.logoutState.observe(viewLifecycleOwner) {
 
-			with(binding) {
-				progressBar.visibility = View.GONE
-				logoutLayout.visibility = if (it.isVisible) View.VISIBLE else View.GONE
-				logoutEmail.text = it.email
-				logoutName.text = it.name
+					with(binding) {
+						progressBar.visibility = View.GONE
+						registerTilName.error = state.nameMessage
+						registerTilEmail.error = state.emailMessage
+						registerTilPassword.error = state.passwordMessage
+					}
+				}
+
+				is StateLoginError -> {
+					state.toastMessage?.let {
+						Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+					}
+
+					with(binding) {
+						progressBar.visibility = View.GONE
+						loginTilEmail.error = state.emailMessage
+						loginTilPassword.error = state.passwordMessage
+					}
+				}
 			}
 		}
 	}

@@ -5,5 +5,7 @@ import com.kaelesty.flexibleschedule.domain.entities.Timetable
 
 interface IGroupRepo {
 
-	fun getFillTimetable(): LiveData<Timetable>
+	fun getFullTimetable(): LiveData<Timetable>
+
+	suspend fun updateTimetable()
 }

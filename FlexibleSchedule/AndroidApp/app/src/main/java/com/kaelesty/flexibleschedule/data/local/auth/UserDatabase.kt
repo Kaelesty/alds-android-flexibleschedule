@@ -1,12 +1,10 @@
-package com.kaelesty.flexibleschedule.data.local
+package com.kaelesty.flexibleschedule.data.local.auth
 
 import android.content.Context
-import androidx.room.AutoMigration
 import androidx.room.Database
-import androidx.room.DeleteTable
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.kaelesty.flexibleschedule.data.entities.UserDbModel
+import com.kaelesty.flexibleschedule.data.entities.dbmodels.auth.UserDbModel
 
 @Database(
 	entities = [UserDbModel::class], version = 2, exportSchema = false,

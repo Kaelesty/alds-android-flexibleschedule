@@ -1,7 +1,6 @@
-package com.kaelesty.flexibleschedule.data.entities
+package com.kaelesty.flexibleschedule.data.entities.dtos
 
 import com.google.gson.annotations.SerializedName
-import com.kaelesty.flexibleschedule.domain.entities.Day
 
 data class DayDto(
 	@SerializedName("timeTableId") val timeTableId: Int,

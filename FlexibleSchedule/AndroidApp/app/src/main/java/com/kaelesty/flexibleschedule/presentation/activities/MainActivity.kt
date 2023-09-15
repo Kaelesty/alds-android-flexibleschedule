@@ -25,12 +25,17 @@ class MainActivity : AppCompatActivity() {
 		ActivityMainBinding.inflate(layoutInflater)
 	}
 
+	private val userFragment = UserFragment.newInstance()
+	private val scheduleFragment = ScheduleFragment.newInstance()
+	private val editFragment = EditFragment.newInstance()
+	private val selectFragment = SelectFragment.newInstance()
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(binding.root)
 
 		supportFragmentManager.beginTransaction()
-			.replace(R.id.fragment_container, UserFragment.newInstance())
+			.replace(R.id.fragment_container, userFragment)
 			.commit()
 
 		with(binding) {
@@ -41,25 +46,25 @@ class MainActivity : AppCompatActivity() {
 
 			buttonSchedule.setOnClickListener {
 				supportFragmentManager.beginTransaction()
-					.replace(R.id.fragment_container, ScheduleFragment.newInstance())
+					.replace(R.id.fragment_container, scheduleFragment)
 					.commit()
 			}
 
 			buttonSelect.setOnClickListener {
 				supportFragmentManager.beginTransaction()
-					.replace(R.id.fragment_container, SelectFragment.newInstance())
+					.replace(R.id.fragment_container, selectFragment)
 					.commit()
 			}
 
 			buttonEdit.setOnClickListener {
 				supportFragmentManager.beginTransaction()
-					.replace(R.id.fragment_container, EditFragment.newInstance())
+					.replace(R.id.fragment_container, editFragment)
 					.commit()
 			}
 
 			buttonUser.setOnClickListener {
 				supportFragmentManager.beginTransaction()
-					.replace(R.id.fragment_container, UserFragment.newInstance())
+					.replace(R.id.fragment_container, userFragment)
 					.commit()
 			}
 

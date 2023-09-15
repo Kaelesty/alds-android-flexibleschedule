@@ -1,14 +1,12 @@
 package com.kaelesty.flexibleschedule.data.remote
 
-import androidx.lifecycle.LiveData
-import com.kaelesty.flexibleschedule.data.entities.ConnectGroupDto
-import com.kaelesty.flexibleschedule.data.entities.FullTimetableDto
-import com.kaelesty.flexibleschedule.data.entities.GroupDto
-import com.kaelesty.flexibleschedule.data.entities.UserGroupDto
+import com.kaelesty.flexibleschedule.data.entities.dtos.ConnectGroupDto
+import com.kaelesty.flexibleschedule.data.entities.dtos.FullTimetableDto
+import com.kaelesty.flexibleschedule.data.entities.dtos.GroupDto
+import com.kaelesty.flexibleschedule.data.entities.dtos.UserGroupDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.POST
 
 interface GroupService {
 

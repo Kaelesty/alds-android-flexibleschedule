@@ -1,4 +1,4 @@
-package com.kaelesty.flexibleschedule.data.entities
+package com.kaelesty.flexibleschedule.data.entities.dtos
 
 data class UserGroupDto(
 	val groupId: Int,

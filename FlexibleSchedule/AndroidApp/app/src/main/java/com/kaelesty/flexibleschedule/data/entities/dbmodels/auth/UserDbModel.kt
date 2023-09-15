@@ -1,4 +1,4 @@
-package com.kaelesty.flexibleschedule.data.entities
+package com.kaelesty.flexibleschedule.data.entities.dbmodels.auth
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

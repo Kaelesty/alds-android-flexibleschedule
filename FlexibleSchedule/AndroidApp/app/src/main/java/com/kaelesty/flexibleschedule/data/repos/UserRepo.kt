@@ -1,19 +1,20 @@
-package com.kaelesty.flexibleschedule.data
+package com.kaelesty.flexibleschedule.data.repos
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.kaelesty.flexibleschedule.data.entities.LoginDto
-import com.kaelesty.flexibleschedule.data.entities.RegisterDto
-import com.kaelesty.flexibleschedule.data.entities.UserDbModel
-import com.kaelesty.flexibleschedule.data.local.UserDao
-import com.kaelesty.flexibleschedule.data.local.UserDatabase
+import com.kaelesty.flexibleschedule.data.mappers.UserMapper
+import com.kaelesty.flexibleschedule.data.entities.dtos.auth.LoginDto
+import com.kaelesty.flexibleschedule.data.entities.dtos.auth.RegisterDto
+import com.kaelesty.flexibleschedule.data.entities.dbmodels.auth.UserDbModel
+import com.kaelesty.flexibleschedule.data.local.auth.UserDao
+import com.kaelesty.flexibleschedule.data.local.auth.UserDatabase
 import com.kaelesty.flexibleschedule.data.remote.AuthServiceFactory
+import com.kaelesty.flexibleschedule.domain.AuthReturnCode
 import com.kaelesty.flexibleschedule.domain.AuthUseCaseResult
 import com.kaelesty.flexibleschedule.domain.entities.User
 import com.kaelesty.flexibleschedule.domain.repo.IUserRepo
-import retrofit2.Response
 
 class UserRepo(val context: Context) : IUserRepo {
 
@@ -28,21 +29,34 @@ class UserRepo(val context: Context) : IUserRepo {
 		val response = authService.register(RegisterDto(name, email, password))
 		Log.d("UserViewModel", "register " + response.code().toString())
 		if (response.code() == 201) {
-			return AuthUseCaseResult("OK")
+			return AuthUseCaseResult(AuthReturnCode.RC_REGISTER_OK)
 		}
 		// TODO relocate strings to string_resources
-		return AuthUseCaseResult("Ошибка на сервере")
+		return AuthUseCaseResult(AuthReturnCode.RC_REGISTER_UNKWOWN)
 	}
 
 	override suspend fun login(email: String, password: String): AuthUseCaseResult {
 		val response = authService.login(LoginDto(email, password))
 		Log.d("UserViewModel", "login " + response.code().toString())
-		if (response.code() == 200) {
-			var jwt = response.headers().values("Set-Cookie")[0]
-			return AuthUseCaseResult("OK", response.body(), jwt)
+		Log.d("UserViewModel", response.errorBody().toString())
+		return when (response.code()) {
+			200 -> {
+				val jwt = response.headers().values("Set-Cookie")[0]
+				AuthUseCaseResult(AuthReturnCode.RC_LOGIN_OK, response.body(), jwt)
+			}
+
+			500 -> {
+				AuthUseCaseResult(AuthReturnCode.RC_LOGIN_EMAIL)
+			}
+
+			400 -> {
+				AuthUseCaseResult(AuthReturnCode.RC_LOGIN_PASSWORD)
+			}
+
+			else -> {
+				AuthUseCaseResult(AuthReturnCode.RC_LOGIN_UNKWOWN)
+			}
 		}
-		// TODO relocate strings to string_resources
-		return AuthUseCaseResult("Ошибка на сервере")
 	}
 
 	override suspend fun logout() {

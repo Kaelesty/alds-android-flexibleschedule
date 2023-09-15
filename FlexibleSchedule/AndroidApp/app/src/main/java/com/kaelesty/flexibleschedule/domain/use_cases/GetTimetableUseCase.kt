@@ -4,5 +4,5 @@ import com.kaelesty.flexibleschedule.domain.repo.IGroupRepo
 
 class GetTimetableUseCase(val repo: IGroupRepo) {
 
-	suspend fun getTimetable() = repo.getFillTimetable()
+	fun getTimetable() = repo.getFullTimetable()
 }
