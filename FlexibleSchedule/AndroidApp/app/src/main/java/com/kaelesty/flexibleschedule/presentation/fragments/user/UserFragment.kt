@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
 import com.kaelesty.flexibleschedule.databinding.FragmentUserBinding
 
 class UserFragment : Fragment() {
@@ -111,10 +110,10 @@ class UserFragment : Fragment() {
 		viewModel.userState.observe(requireActivity()) { state ->
 
 			when(state) {
-				is StateLoading -> {
+				is UserStateLoading -> {
 					binding.progressBar.visibility = View.VISIBLE
 				}
-				is StateUnauthorized -> {
+				is UserStateUnauthorized -> {
 					with(binding) {
 						progressBar.visibility = View.GONE
 						registerLayoutButton.visibility = View.VISIBLE
@@ -123,7 +122,7 @@ class UserFragment : Fragment() {
 					}
 				}
 
-				is StateAuthorized -> {
+				is UserStateAuthorized -> {
 					with(binding) {
 						progressBar.visibility = View.GONE
 						registerLayoutButton.visibility = View.GONE
@@ -135,7 +134,7 @@ class UserFragment : Fragment() {
 					}
 				}
 
-				is StateRegisterError -> {
+				is UserStateRegisterError -> {
 					state.toastMessage?.let {
 						Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
 					}
@@ -149,7 +148,7 @@ class UserFragment : Fragment() {
 					}
 				}
 
-				is StateLoginError -> {
+				is UserStateLoginError -> {
 					state.toastMessage?.let {
 						Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
 					}

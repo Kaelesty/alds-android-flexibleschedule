@@ -1,15 +1,11 @@
 package com.kaelesty.flexibleschedule.presentation.activities
 
-import android.annotation.SuppressLint
-import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.View
 import com.bumptech.glide.Glide
 import com.kaelesty.flexibleschedule.R
 import com.kaelesty.flexibleschedule.databinding.ActivityMainBinding
-import com.kaelesty.flexibleschedule.presentation.fragments.EditFragment
+import com.kaelesty.flexibleschedule.presentation.fragments.edit.EditFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.schedule.ScheduleFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.SelectFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.user.UserFragment

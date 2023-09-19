@@ -2,7 +2,6 @@ package com.kaelesty.flexibleschedule.presentation.fragments.user
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -42,15 +41,15 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 
 		getUserUseCase.getUser().observe(activity as LifecycleOwner) { user ->
 			if (user.isAuthorized) {
-				_userState.postValue(StateAuthorized(user.name, user.email) as UserState)
+				_userState.postValue(UserStateAuthorized(user.name, user.email) as UserState)
 			} else {
-				_userState.postValue(StateUnauthorized())
+				_userState.postValue(UserStateUnauthorized())
 			}
 		}
 	}
 
 	fun register(email: String, name: String, password: String) {
-		_userState.postValue(StateLoading())
+		_userState.postValue(UserStateLoading())
 		if (! validateRegister(email, name, password)) {
 			return
 		}
@@ -63,12 +62,12 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 				}
 
 				AuthReturnCode.RC_REGISTER_EMAIL_EXIST -> {
-					_userState.postValue(StateRegisterError("Email не найден"))
+					_userState.postValue(UserStateRegisterError("Email не найден"))
 				}
 
 				else -> {
 					_userState.postValue(
-						StateRegisterError(
+						UserStateRegisterError(
 							"Ошибка на сервере"
 						)
 					)
@@ -78,7 +77,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 	}
 
 	fun login(email: String, password: String) {
-		_userState.postValue(StateLoading())
+		_userState.postValue(UserStateLoading())
 		if (! validateLogin(email, password)) {
 			return
 		}
@@ -89,24 +88,24 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 				AuthReturnCode.RC_LOGIN_OK -> {
 					result.body as UserResponse
 					onSuccessfulLogin(result.body.email, result.body.name, result.jwt ?: "")
-					_userState.postValue(StateAuthorized(result.body.name, result.body.email))
+					_userState.postValue(UserStateAuthorized(result.body.name, result.body.email))
 				}
 
 				AuthReturnCode.RC_LOGIN_PASSWORD -> {
-					_userState.postValue(StateLoginError(
+					_userState.postValue(UserStateLoginError(
 						passwordMessage = "Неправильный пароль"
 					))
 				}
 
 				AuthReturnCode.RC_LOGIN_EMAIL -> {
-					_userState.postValue(StateLoginError(
+					_userState.postValue(UserStateLoginError(
 						emailMessage = "Email не найден"
 					))
 				}
 
 				else -> {
 					_userState.postValue(
-						StateRegisterError(
+						UserStateRegisterError(
 							"Ошибка на сервере"
 						)
 					)
@@ -118,7 +117,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 	fun logout() {
 		viewModelScope.launch(Dispatchers.IO) {
 			logoutUseCase.logout()
-			_userState.postValue(StateUnauthorized())
+			_userState.postValue(UserStateUnauthorized())
 		}
 	}
 
@@ -135,7 +134,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 		}
 
 		_userState.postValue(
-			StateLoginError(
+			UserStateLoginError(
 				"", emailError, passwordError
 			)
 		)
@@ -164,7 +163,7 @@ class UserViewModel(activity: Context, application: Application) : AndroidViewMo
 		}
 
 		_userState.postValue(
-			StateRegisterError(
+			UserStateRegisterError(
 				"", emailError, nameError, passwordError
 			)
 		)
