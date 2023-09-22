@@ -42,7 +42,7 @@ class DayEditRecyclerAdapter: Adapter<DayEditRecyclerAdapter.DayEditViewHolder>(
 		val adapter = PairEditRecyclerAdapter()
 
 		init {
-			binding.recyclerPairs.adapter = adapter
+			//binding.recyclerPairs.adapter = adapter
 			binding.buttonAdd.setOnClickListener {
 				adapter.pairs.add(
 					PairView("", "", "", "")

@@ -27,7 +27,7 @@
                 android:hint="Название пары"
                 android:fontFamily="@font/roboto_light_family"
                 android:textSize="18sp"
-                android:inputType="text"/>
+                android:inputType="textCapWords"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -44,11 +44,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pair_tiet_teacher"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
                 android:hint="Преподаватель"
                 android:fontFamily="@font/roboto_light_family"
                 android:textSize="16sp"
-                android:inputType="text"/>
+                android:inputType="textCapWords"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -65,11 +65,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pair_tiet_place"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
                 android:hint="Место"
                 android:fontFamily="@font/roboto_light_family"
                 android:textSize="16sp"
-                android:inputType="text"/>
+                android:inputType="textCapWords"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -94,7 +94,7 @@
                 android:hint="Время"
                 android:fontFamily="@font/roboto_light_family"
                 android:textSize="16sp"
-                android:inputType="text"/>
+                android:inputType="time"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 

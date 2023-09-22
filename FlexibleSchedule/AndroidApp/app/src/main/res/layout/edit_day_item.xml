@@ -17,17 +17,26 @@
             android:textColor="@color/white"
             tools:text="Понедельник"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="8dp"
-            tools:itemCount="1"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/edit_pair_item"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            android:id="@+id/recycler_pairs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            tools:itemCount="1"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            tools:listitem="@layout/edit_pair_item"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tv_title"-->
+<!--            android:id="@+id/recycler_pairs"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+    <LinearLayout
+        android:id="@+id/list_pairs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/button_add"

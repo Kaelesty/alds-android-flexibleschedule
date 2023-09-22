@@ -27,7 +27,6 @@ class UserRepo(val context: Context) : IUserRepo {
 		password: String
 	): AuthUseCaseResult {
 		val response = authService.register(RegisterDto(name, email, password))
-		Log.d("UserViewModel", "register " + response.code().toString())
 		if (response.code() == 201) {
 			return AuthUseCaseResult(AuthReturnCode.RC_REGISTER_OK)
 		}

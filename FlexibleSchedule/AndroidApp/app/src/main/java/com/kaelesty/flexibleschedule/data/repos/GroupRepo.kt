@@ -8,6 +8,7 @@ import androidx.lifecycle.map
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kaelesty.flexibleschedule.data.entities.dtos.FullTimetableDto
+import com.kaelesty.flexibleschedule.data.entities.dtos.GroupDto
 import com.kaelesty.flexibleschedule.data.local.auth.UserDatabase
 //import com.kaelesty.flexibleschedule.data.local.group.DayDao
 //import com.kaelesty.flexibleschedule.data.local.group.DayDatabase
@@ -15,6 +16,7 @@ import com.kaelesty.flexibleschedule.data.local.auth.UserDatabase
 import com.kaelesty.flexibleschedule.data.local.group.TimetableDatabase
 import com.kaelesty.flexibleschedule.data.mappers.GroupMapper
 import com.kaelesty.flexibleschedule.data.remote.GroupServiceFactory
+import com.kaelesty.flexibleschedule.domain.GroupReturnCode
 import com.kaelesty.flexibleschedule.domain.entities.Day
 import com.kaelesty.flexibleschedule.domain.entities.Timetable
 import com.kaelesty.flexibleschedule.domain.repo.IGroupRepo
@@ -24,8 +26,6 @@ class GroupRepo(context: Context): IGroupRepo {
 	private val groupService = GroupServiceFactory.apiService
 	private val userDao = UserDatabase.getInstance(context).dao()
 	private val timetableDao = TimetableDatabase.getInstance(context).dao()
-//	private val dayDao: DayDao = DayDatabase.getInstance(context).dao()
-//	private val pairDao = PairDatabase.getInstance(context).dao()
 
 	override fun getFullTimetable(): LiveData<Timetable> {
 		// Backend always return 0 as timetable.id so we can store only one timetable
@@ -39,6 +39,22 @@ class GroupRepo(context: Context): IGroupRepo {
 
 	}
 
+	override suspend fun uploadTimetable(name: String, timetable: Timetable): GroupReturnCode {
+		val user = userDao.getStaticUser() ?: return GroupReturnCode.RC_UPLOAD_UNAUTH
+		val cookies = user.jwt
+
+		val response = groupService.createGroup(cookies, GroupDto(
+			name, timetable
+		))
+
+		return when (response.code()) {
+			200 -> GroupReturnCode.RC_UPLOAD_OK
+			401 -> GroupReturnCode.RC_UPLOAD_UNAUTH
+			400 -> GroupReturnCode.RC_UPLOAD_TO_MANY
+			else -> GroupReturnCode.RC_UPLOAD_UNKWOWN
+		}
+	}
+
 	override suspend fun updateTimetable() {
 		val user = userDao.getStaticUser() ?: return
 		val cookies = user.jwt
@@ -48,19 +64,5 @@ class GroupRepo(context: Context): IGroupRepo {
 		timetableDao.addTimetable(
 			GroupMapper.Timetable_DtoToDbModel(timetableDto)
 		)
-//		var counter = -1
-//		for (day in timetableDto.days) {
-//			counter++
-//			val dayId = timetableDto.id.toString() + "_" + counter.toString()
-//			dayDao.addDay(
-//				GroupMapper.Day_DtoToDbModel(day, dayId)
-//			)
-//			for (pair in day.pairs) {
-//
-//				pairDao.addPair(
-//					GroupMapper.Pair_DtoToDbModel(pair, dayId)
-//				)
-//			}
-//		}
 	}
 }

@@ -5,13 +5,15 @@ import com.kaelesty.flexibleschedule.data.entities.dtos.FullTimetableDto
 import com.kaelesty.flexibleschedule.data.entities.dtos.GroupDto
 import com.kaelesty.flexibleschedule.data.entities.dtos.UserGroupDto
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.POST
 
 interface GroupService {
 
-	@GET("CreateGroup")
-	suspend fun createGroup(groupDto: GroupDto)
+	@POST("CreateGroup")
+	suspend fun createGroup(@Header("Cookie") cookie: String, @Body groupDto: GroupDto): Response<Unit>
 
 	@GET("DeleteGroup")
 	suspend fun deleteGroup(userGroupDto: UserGroupDto)

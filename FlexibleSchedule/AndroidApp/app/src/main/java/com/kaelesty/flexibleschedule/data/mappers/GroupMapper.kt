@@ -45,4 +45,16 @@ object GroupMapper {
 		dbModel.place,
 		dbModel.teacher
 	)
+
+	fun Timetable_EntityToDto(entity: Timetable) = FullTimetableDto(
+		entity.id, entity.days.map { Day_EntityToDto(it) }
+	)
+
+	fun Day_EntityToDto(entity: Day) = DayDto(
+		entity.timeTableId, entity.pairs.map { Pair_EntityToDto(it) }
+	)
+
+	fun Pair_EntityToDto(entity: Pair) = PairDto(
+		0, entity.time, entity.info, entity.place, entity.teacher
+	)
 }
