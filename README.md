@@ -22,6 +22,4 @@
   <li>Бунделев Илья Алексеевич <b>4215</b></li>
 </ul>
 
-<p>
-  Ссылка на github c приложением <a>https://github.com/Kaelesty/devspot-android-flexible_schedule</a>
-</p>
+
