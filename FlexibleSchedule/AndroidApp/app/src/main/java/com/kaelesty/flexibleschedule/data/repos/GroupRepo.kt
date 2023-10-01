@@ -1,12 +1,14 @@
 package com.kaelesty.flexibleschedule.data.repos
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.kaelesty.flexibleschedule.data.entities.dtos.ConnectGroupDto
 import com.kaelesty.flexibleschedule.data.entities.dtos.FullTimetableDto
 import com.kaelesty.flexibleschedule.data.entities.dtos.GroupDto
 import com.kaelesty.flexibleschedule.data.local.auth.UserDatabase
@@ -16,6 +18,7 @@ import com.kaelesty.flexibleschedule.data.local.auth.UserDatabase
 import com.kaelesty.flexibleschedule.data.local.group.TimetableDatabase
 import com.kaelesty.flexibleschedule.data.mappers.GroupMapper
 import com.kaelesty.flexibleschedule.data.remote.GroupServiceFactory
+import com.kaelesty.flexibleschedule.domain.ConnectGroupReturnCode
 import com.kaelesty.flexibleschedule.domain.GroupReturnCode
 import com.kaelesty.flexibleschedule.domain.entities.Day
 import com.kaelesty.flexibleschedule.domain.entities.Timetable
@@ -52,6 +55,19 @@ class GroupRepo(context: Context): IGroupRepo {
 			401 -> GroupReturnCode.RC_UPLOAD_UNAUTH
 			400 -> GroupReturnCode.RC_UPLOAD_TO_MANY
 			else -> GroupReturnCode.RC_UPLOAD_UNKWOWN
+		}
+	}
+
+	override suspend fun connectGroup(code: String): ConnectGroupReturnCode {
+		val user = userDao.getStaticUser() ?: return ConnectGroupReturnCode.GC_UNAUTH
+		val cookies = user.jwt
+
+		val response = groupService.connectToGroup(cookies, ConnectGroupDto(code))
+
+		return when(response.code()) {
+			200 -> ConnectGroupReturnCode.GC_OK
+			401 -> ConnectGroupReturnCode.GC_NOTFOUND
+			else -> ConnectGroupReturnCode.GC_UNKNOWN
 		}
 	}
 

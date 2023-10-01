@@ -7,7 +7,7 @@ import com.kaelesty.flexibleschedule.R
 import com.kaelesty.flexibleschedule.databinding.ActivityMainBinding
 import com.kaelesty.flexibleschedule.presentation.fragments.edit.EditFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.schedule.ScheduleFragment
-import com.kaelesty.flexibleschedule.presentation.fragments.SelectFragment
+import com.kaelesty.flexibleschedule.presentation.fragments.select.SelectFragment
 import com.kaelesty.flexibleschedule.presentation.fragments.user.UserFragment
 
 class MainActivity : AppCompatActivity() {

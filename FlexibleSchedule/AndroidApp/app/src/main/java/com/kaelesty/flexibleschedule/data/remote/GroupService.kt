@@ -18,15 +18,14 @@ interface GroupService {
 	@GET("DeleteGroup")
 	suspend fun deleteGroup(userGroupDto: UserGroupDto)
 
-	@GET("ConnectToGroup")
-	suspend fun connectToGroup(connectGroupDto: ConnectGroupDto)
+	@POST("ConnectToGroup")
+	suspend fun connectToGroup(@Header("Cookie") cookie: String, @Body connectGroupDto: ConnectGroupDto): Response<Unit>
 
 	@GET("ChangePriority")
 	suspend fun changePriority(userGroupDto: UserGroupDto)
 
 	@GET("GetFullTimetable")
 	suspend fun getFullTimetable(@Header("Cookie") cookie: String): Response<FullTimetableDto>
-	// I get jwt token> but where i should pass it?
 
 	@GET("GetAllGroupCodes")
 	suspend fun getAllGroupCodes()

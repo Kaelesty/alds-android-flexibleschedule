@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object GroupServiceFactory {
 
-	private const val URL = "https://783a-193-32-202-124.ngrok-free.app" + "/api/Group/"
+	private const val URL = "https://b0cb-193-32-202-60.ngrok-free.app" + "/api/Group/"
 
 	val apiService: GroupService = Retrofit.Builder()
 		.baseUrl(URL)
