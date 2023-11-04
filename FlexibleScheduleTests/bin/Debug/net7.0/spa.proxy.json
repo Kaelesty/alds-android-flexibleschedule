@@ -1,8 +1,0 @@
-{
-"SpaProxyServer": {
-"ServerUrl": "https://localhost:44462",
-"LaunchCommand": "npm start",
-"WorkingDirectory": "/Users/danilalatyrev/Desktop/ForProjects/FlexibleSchedule/FlexibleSchedule/ClientApp/",
-"MaxTimeoutInSeconds": "120"
-}
-}
