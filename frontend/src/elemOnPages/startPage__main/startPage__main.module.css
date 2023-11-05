@@ -1,0 +1,26 @@
+.startPage__main {}
+
+.startPage__h1 {
+    font-size: 6em;
+    font-weight: normal;
+    text-align: center;
+    letter-spacing: 0.15em;
+}
+
+.StartPage__sokol {
+    --size: 30em;
+    position: absolute;
+    left: calc(50% - var(--size)/2);
+    top: calc(50%);
+    width: var(--size);
+    transition: 1s;
+    cursor: pointer;
+}
+
+/*
+animation: animSokol 2s infinite ease-in-out;
+animation: SokolPoletAnim 5s infinite cubic-bezier(0.175, 0.885, 0.32, 1.275);
+*/
+
+
+

@@ -1,13 +1,25 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "romeo-rus-lat";
+  src:  url('./fonts/Bokvi_na_nitkax.otf'); 
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: "nav_font";
+  src:  url('./fonts/Slimami.ttf'); 
+}
+
+body::-webkit-scrollbar {/*задний фон*/
+  overflow-y: scroll;
+  background-color: #000000;
+  width: 0.7em;
+}
+
+body::-webkit-scrollbar-track {/*фон полоски*/
+  border-radius: 4em;
+  background-color: #000000;
+}
+
+body::-webkit-scrollbar-thumb {/*полоска*/
+  border-radius: 4em;
+  background-color: rgba(255, 255, 255, 0.7);
 }

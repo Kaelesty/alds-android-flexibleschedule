@@ -9,7 +9,20 @@ module.exports = function (app) {
     }
 
     app.get('/', (req, res) => {
-        res.json("Hello React");
+        //res.json("Hello React");
+        console.log(req.query);
+        switch (req.query.type) {
+            case "login": {
+                fs.readFile('./../data/users.txt', 'utf8', (err, data) => {
+                    if (err) {console.log("error: ", err)}
+                    if (req.query.name + ":" + req.query.password in data) {
+                        res.json(true)
+                    } else {
+                        res.json(false)
+                    }
+                })
+            }
+        }
         /*
         const base = './backend/files/';
         let path = '';
