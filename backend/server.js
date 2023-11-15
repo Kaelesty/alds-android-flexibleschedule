@@ -13,6 +13,10 @@ app.use(function(req, res, next) {
 
 require('./routes/index')(app);
 
-app.listen(port, () => {
+app.listen(port, 'localhost', () => {
     console.log('start')
 })
+/*
+app.on('listening', function() {
+    console.log('Express server started on port %s at %s', server.address().port, server.address().address);
+});*/

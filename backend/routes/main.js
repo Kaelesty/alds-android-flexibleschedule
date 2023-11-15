@@ -3,58 +3,42 @@
 const fs = require('fs');
 
 module.exports = function (app) {
+    const readFileLines = filename =>
+        fs
+            .readFileSync(filename)
+            .toString('UTF8')
+            .split('\n');
 
-    function isFolder(path) {
-        return fs.lstatSync(path).isDirectory() && fs.existsSync(path);
-    }
-
-    app.get('/', (req, res) => {
-        //res.json("Hello React");
-        console.log(req.query);
-        switch (req.query.type) {
-            case "login": {
-                fs.readFile('./../data/users.txt', 'utf8', (err, data) => {
-                    if (err) {console.log("error: ", err)}
-                    if (req.query.name + ":" + req.query.password in data) {
-                        res.json(true)
-                    } else {
-                        res.json(false)
-                    }
-                })
-            }
-        }
-        /*
-        const base = './backend/files/';
-        let path = '';
-
-        if ('path' in req.query) {
-            path = req.query.path;
-        }
-
-        if (isFolder(base + path)) {
-            //если папка
-            let files = fs.readdirSync(base + path).map(item => {
-                const isDir = fs.lstatSync(base + path + '/' + item).isDirectory();
-                let size = 0
-                if (!isDir) {
-                    size = fs.statSync(base + path + '/' + item)
-                    console.log(size.size);
-                }
-
-                return {
-                    name: item,
-                    dir: isDir,
-                    size: size.size ?? 0
-                }
-            })
+    app.get('/login', (req, res) => {
+        let user = req.query.user + ":" + req.query.password;
+        let file = readFileLines('./backend/data/users.txt');
+        if (file.find(el => el.slice(0, el.lastIndexOf(':')) == user)) {
             res.json({
-                path: path,
-                result: true,
-                files: files
+                state: true,
+                user: file.find(el => (el.slice(0, el.lastIndexOf(':')) == user)).split(':')[2]
             });
         } else {
-            console.log('error')
+            res.json({
+                state: false,
+                user: undefined
+            });
         }
-        */
+    })
+
+    app.get('/registration', (req, res) => {
+        let user = req.query.user + ":" + req.query.password + ":" + req.query.login;
+        let file = readFileLines('./backend/data/users.txt');
+        if (file.find(el => el.slice(0, el.lastIndexOf(':')) == user)) {
+            res.json({
+                state: false,
+                user: undefined
+            });
+        } else {
+            fs.appendFileSync('./backend/data/users.txt', '\n' + user)
+            res.json({
+                state: true,
+                user: req.query.login
+            });
+        }
     })
 }
