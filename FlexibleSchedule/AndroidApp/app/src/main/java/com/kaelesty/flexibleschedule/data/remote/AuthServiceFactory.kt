@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object AuthServiceFactory {
 
-	private const val URL = "https://b0cb-193-32-202-60.ngrok-free.app" + "/api/Auth/"
+	private const val URL = " https://14d0-193-32-202-60.ngrok-free.app" + "/api/Auth/"
 
 	val apiService: AuthService = Retrofit.Builder()
 		.baseUrl(URL)

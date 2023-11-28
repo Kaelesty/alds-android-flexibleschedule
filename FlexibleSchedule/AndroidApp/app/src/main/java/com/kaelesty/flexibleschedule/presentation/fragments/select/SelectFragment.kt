@@ -1,13 +1,19 @@
 package com.kaelesty.flexibleschedule.presentation.fragments.select
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.kaelesty.flexibleschedule.databinding.FragmentSelectBinding
+import com.kaelesty.flexibleschedule.databinding.SelectUsergroupBinding
+import com.kaelesty.flexibleschedule.domain.entities.UserGroup
 import com.kaelesty.flexibleschedule.presentation.fragments.edit.EditViewModel
 import com.kaelesty.flexibleschedule.presentation.fragments.edit.EditViewModelFactory
 
@@ -23,6 +29,8 @@ class SelectFragment : Fragment() {
 	private val binding by lazy {
 		FragmentSelectBinding.inflate(layoutInflater)
 	}
+
+	private var groupBindings = mutableListOf<SelectUsergroupBinding>()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +55,29 @@ class SelectFragment : Fragment() {
 			binding.connectTilName.error = ""
 		}
 
+		binding.priorityButton.setOnClickListener {
+
+			groupBindings.forEach { vb ->
+				viewModel.groups.value?.forEach { group ->
+					if (vb.tvGroup.text == group.code) {
+						if (vb.tietPriority.text.toString() != "") {
+							viewModel.changePriority(
+								group.copy(
+									priority = vb.tietPriority.text.toString().toInt()
+								)
+							)
+						}
+					}
+				}
+			}
+		}
+
 		viewModel.connectState.observe(requireActivity()) {
 			when(it) {
 				is ConnectOK -> {
 					binding.connectTietName.setText("")
 					Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show()
+					// TODO Hide keyboard
 				}
 
 				is ConnectUnauth -> {
@@ -65,6 +91,32 @@ class SelectFragment : Fragment() {
 				is ConnectUnknown -> {
 					Toast.makeText(requireContext(), "Ошибка на сервере", Toast.LENGTH_SHORT).show()
 				}
+			}
+		}
+
+		viewModel.groups.observe(requireActivity()) {
+
+			binding.priorityLv.removeAllViews()
+
+			groupBindings = mutableListOf()
+
+			it.forEach {  group ->
+				val viewBinding = SelectUsergroupBinding.inflate(
+					layoutInflater,
+					binding.priorityLv,
+					false
+				)
+
+				viewBinding.tvGroup.text = group.code
+				viewBinding.tvPriority.text = group.priority.toString()
+
+				binding.priorityLv.addView(viewBinding.root)
+
+				viewBinding.deleteButton.setOnClickListener {
+					viewModel.deleteGroup(group)
+				}
+
+				groupBindings.add(viewBinding)
 			}
 		}
 	}

@@ -8,9 +8,11 @@ import com.kaelesty.flexibleschedule.data.entities.dbmodels.group.TimetableDbMod
 import com.kaelesty.flexibleschedule.data.entities.dtos.DayDto
 import com.kaelesty.flexibleschedule.data.entities.dtos.FullTimetableDto
 import com.kaelesty.flexibleschedule.data.entities.dtos.PairDto
+import com.kaelesty.flexibleschedule.data.entities.dtos.UserGroupDto
 import com.kaelesty.flexibleschedule.domain.entities.Day
 import com.kaelesty.flexibleschedule.domain.entities.Pair
 import com.kaelesty.flexibleschedule.domain.entities.Timetable
+import com.kaelesty.flexibleschedule.domain.entities.UserGroup
 
 object GroupMapper {
 
@@ -56,5 +58,13 @@ object GroupMapper {
 
 	fun Pair_EntityToDto(entity: Pair) = PairDto(
 		0, entity.time, entity.info, entity.place, entity.teacher
+	)
+
+	fun UserGroup_DomainToDto(domain: UserGroup) = UserGroupDto(
+		domain.groupId, domain.code, domain.priority
+	)
+
+	fun UserGroup_DtoToDomain(dto: UserGroupDto) = UserGroup(
+		dto.groupId, dto.code, dto.priority
 	)
 }

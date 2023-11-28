@@ -15,19 +15,19 @@ interface GroupService {
 	@POST("CreateGroup")
 	suspend fun createGroup(@Header("Cookie") cookie: String, @Body groupDto: GroupDto): Response<Unit>
 
-	@GET("DeleteGroup")
-	suspend fun deleteGroup(userGroupDto: UserGroupDto)
+	@POST("DeleteGroup")
+	suspend fun deleteGroup(@Header("Cookie") cookie: String, @Body userGroupDto: UserGroupDto): Response<Unit>
 
 	@POST("ConnectToGroup")
 	suspend fun connectToGroup(@Header("Cookie") cookie: String, @Body connectGroupDto: ConnectGroupDto): Response<Unit>
 
-	@GET("ChangePriority")
-	suspend fun changePriority(userGroupDto: UserGroupDto)
+	@POST("ChangePriority")
+	suspend fun changePriority(@Header("Cookie") cookie: String, @Body userGroupDto: UserGroupDto): Response<Unit>
 
 	@GET("GetFullTimetable")
 	suspend fun getFullTimetable(@Header("Cookie") cookie: String): Response<FullTimetableDto>
 
 	@GET("GetAllGroupCodes")
-	suspend fun getAllGroupCodes()
+	suspend fun getAllGroupCodes(@Header("Cookie") cookie: String): Response<List<UserGroupDto>>
 
 }
