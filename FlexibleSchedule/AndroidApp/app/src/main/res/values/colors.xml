@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="smoke">#F5F5F5</color>
+    <color name="sunny">#FFFACD</color>
+
+    <color name="space_accent_strong">#c5cec2</color>
+    <color name="space_accent_weak">#f1f1e6</color>
+    <color name="space_weak">#f9f8ff</color>
+    <color name="space_medium">#8e8cb9</color>
+    <color name="space_strong">#0a205a</color>
+    <color name="space_weakest">#CAC8F9</color>
+</resources>

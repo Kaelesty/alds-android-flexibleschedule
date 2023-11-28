@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp">
+
+    <View
+        android:id="@+id/divider"
+        style="@style/Divider"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_light_family"
+        android:textColor="@color/space_strong"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        tools:text="Основы программирования, Лекция" />
+
+    <TextView
+        android:layout_marginTop="4dp"
+        android:id="@+id/tv_teacher"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_light_family"
+        android:textColor="@color/space_medium"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_info"
+        tools:text="Куртяник Д.В." />
+
+    <TextView
+        android:id="@+id/tv_place"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_light_family"
+        android:textColor="@color/space_medium"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_teacher"
+        tools:text="Ленсовета 14, 32-02" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/roboto_light_family"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/space_strong"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_place"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_middle"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="17:00" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
