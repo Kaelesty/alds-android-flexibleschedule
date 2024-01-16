@@ -18,4 +18,30 @@
   <li>Бунделев Илья Алексеевич <b>4215</b></li>
 </ul>
 
+<h2>Сборка и запуск проекта</h2>
+<ul>
+  <li>0. Скачать код проекта с Github</li>
+</ul>
+<h3>Веб-приложение</h3>
+<ol>
+  <li>
+    Скачать и установить <a href="https://visualstudio.microsoft.com/ru/vs/">Visual Studio 2022</a> (Версия 17.8.3 или более новая) и установить компонент "ASP.NET и разработка веб-приложений"<br>
+    ![изображение](https://github.com/Kaelesty/alds-android-flexibleschedule/assets/74826130/a168b4d4-f77a-490d-966e-70f4634522e5)
+
+  </li>
+  <li>
+    Скачать и установить <a href="https://nodejs.org/en">NodeJS</a> (Версия LTS 20.11.0)
+  </li>
+  <li>
+    Скачать и установить <a href="https://dev.mysql.com/downloads/">MySQL Community</a> (Версия 8.0.34 или более новая)
+  </li>
+  <li>
+    Создать пользователя MySQL и внести его данные в файл FlexibleSchedule/appsettings.json<br>
+    ![изображение](https://github.com/Kaelesty/alds-android-flexibleschedule/assets/74826130/d8fd26e0-fc85-45d5-af5d-783240977367)
+  </li>
+  <li>
+    Открыть файл FlexibleSchedule.sln как решение VisualStudio и запустить сборку проекта
+  </li>
+</ol>
+
 
