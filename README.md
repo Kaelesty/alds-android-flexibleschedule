@@ -18,6 +18,16 @@
   <li>Бунделев Илья Алексеевич <b>4215</b></li>
 </ul>
 
+<h2>
+  Android-приложение
+</h2>
+<img src="https://github.com/Kaelesty/alds-android-flexibleschedule/assets/74826130/cd1f46b7-6f4e-4a0d-9c02-190404a6b2d4">
+<img src="https://github.com/Kaelesty/alds-android-flexibleschedule/assets/74826130/0811399a-b7b3-4d46-848e-dded5adb308b">
+<img src="https://github.com/Kaelesty/alds-android-flexibleschedule/assets/74826130/5028c359-0c1e-429a-b2f3-a7d7244ac8f2">
+<br> Экраны расписания, изменения приоритетов и создания расписания
+
+
+
 <h2>Сборка и запуск проекта</h2>
 <ul>
   <li>0. Скачать код проекта с Github</li>
@@ -93,6 +103,7 @@
   <li>
       Собрать файл ("Build APK(s)")<br>
    <img src="https://github.com/Kaelesty/alds-android-flexibleschedule/assets/74826130/e72eac8c-8b62-48c6-9873-b53db9b51201">
+    <br>(Файл будет расположен в (В директории проекта) /app/build/outputs/apk/)
   </li>
 </ol>
 
